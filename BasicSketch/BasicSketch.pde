@@ -3,14 +3,17 @@ import java.util.TreeSet;
 
 LayoutManager layoutManager = new LayoutManager();
 TreeSet scheduler;
+Server server = new Server();
 int frameCount;
 static int conversationCounter = 0;
 static int eventCounter = 0;
+PFont f;
 
 void setup() {
   size(400, 400);
   background(255);
   smooth();
+  f = createFont("Arial",16,true); // Arial, 16 point, anti-aliasing on
   
   frameCount = 0;
   scheduler = new TreeSet();
@@ -36,7 +39,7 @@ void draw() {
       next = (scheduler.size()>0?(Event)scheduler.first():null);
     }
   }
-
+  server.display();
 
 }
 
