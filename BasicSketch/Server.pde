@@ -2,12 +2,22 @@ class Server {
     List<Conversation> pool = new ArrayList<Conversation>();
     
     int incomingRequest(Conversation pConversation) {
-      pool.add(pConversation);
-      int pos = pool.size()-1;
+      int pos = -1;
+      for (int i=0; i<pool.size(); i++) {
+        if (pool.get(i)==null) {
+          pos = i;
+          break;
+        }
+      }
+      if (pos >= 0) {
+        pool.set(pos, pConversation);
+      } else {
+        pool.add(pConversation);
+        pos = pool.size()-1;
+      }  
       println("SERVER incoming request for conversation " 
         + pConversation.id + " at position " + pos);
       return pos;
-      //TODO reuse locations in pool
     }
     
     int terminatingRequest(Conversation pConversation) {
@@ -44,7 +54,6 @@ class Server {
           color fillColor = entry.fillColor;
           fill(fillColor, 255);
           rectMode(CENTER);
-          //translate(200,0);
           float rad = layoutManager.clientSideRad;
           float xpos = layoutManager.serverSideLeftMargin + 10 + rad/2;
           float ypos = getYPos(i);
