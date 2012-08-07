@@ -10,10 +10,10 @@ void setup() {
   
   frameCount = 0;
   scheduler = new TreeSet();
-  scheduler.add(new Event(1, 1000));
-  scheduler.add(new Event(2, 1000));
-  scheduler.add(new Event(3, 2000));
-  scheduler.add(new Event(4, 3000));
+  scheduler.add(new Event(1, 1000, new Conversation()));
+  scheduler.add(new Event(2, 1000, new Conversation()));
+  scheduler.add(new Event(3, 2000, new Conversation()));
+  scheduler.add(new Event(4, 3000, new Conversation()));
   
 }
  
@@ -25,11 +25,7 @@ void draw() {
     //println("millis " + millis() + " got event at " + next.startMs ); 
     while (next!=null && next.startMs<=millis()) {
       println("frame " + frameCount + " millis " + millis() + " displaying event " ); 
-      stroke(128,128,128,128);
-      fill(color(random(255),random(255), random(255)));
-      rectMode(CENTER);
-      //translate(200,0);
-      ellipse(random(380)+10, random(380)+10,random(40)+10,random(40)+10);
+      next.conversation.display();
       scheduler.remove(next);
       next = (scheduler.size()>0?(Event)scheduler.first():null);
     }
