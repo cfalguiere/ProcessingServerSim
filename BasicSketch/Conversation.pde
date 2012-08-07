@@ -1,8 +1,13 @@
 class Conversation { 
   int id;
+  float xpos;
+  float ypos;
+  float rad = 20;
   
   Conversation() {
     id = conversationCounter++;
+    xpos = 10;
+    ypos = id*rad + 10;
   }
   
   void display() {
@@ -10,6 +15,6 @@ class Conversation {
       fill(color(random(255),random(255), random(255)));
       rectMode(CENTER);
       //translate(200,0);
-      ellipse(random(380)+10, random(380)+10,random(40)+10,random(40)+10);
+      ellipse(xpos, ypos, rad, rad);
   }
 }
