@@ -10,10 +10,10 @@ void setup() {
   
   frameCount = 0;
   scheduler = new TreeSet();
-  scheduler.add(new Event(1000));
-  scheduler.add(new Event(1001));
-  scheduler.add(new Event(2000));
-  scheduler.add(new Event(3000));
+  scheduler.add(new Event(1, 1000));
+  scheduler.add(new Event(2, 1000));
+  scheduler.add(new Event(3, 2000));
+  scheduler.add(new Event(4, 3000));
   
 }
  
