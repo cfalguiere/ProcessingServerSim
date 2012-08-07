@@ -1,5 +1,8 @@
 class Conversation { 
+  int id;
+  
   Conversation() {
+    id = conversationCounter++;
   }
   
   void display() {

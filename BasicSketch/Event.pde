@@ -2,8 +2,8 @@ class Event implements Comparable<Event> {
   long startMs;
   int id;
   Conversation conversation;
-  Event(int tempId, long tempStartMs, Conversation tempConversation) {
-    id = tempId;
+  Event(long tempStartMs, Conversation tempConversation) {
+    id = eventCounter++;
     startMs = tempStartMs;
     conversation = tempConversation;
   }

@@ -3,6 +3,8 @@ import java.util.TreeSet;
 
 TreeSet scheduler;
 int frameCount;
+static int conversationCounter = 0;
+static int eventCounter = 0;
 
 void setup() {
   size(400, 400);
@@ -10,10 +12,10 @@ void setup() {
   
   frameCount = 0;
   scheduler = new TreeSet();
-  scheduler.add(new Event(1, 1000, new Conversation()));
-  scheduler.add(new Event(2, 1000, new Conversation()));
-  scheduler.add(new Event(3, 2000, new Conversation()));
-  scheduler.add(new Event(4, 3000, new Conversation()));
+  scheduler.add(new Event(1000, new Conversation()));
+  scheduler.add(new Event(1000, new Conversation()));
+  scheduler.add(new Event(2000, new Conversation()));
+  scheduler.add(new Event(3000, new Conversation()));
   
 }
  
