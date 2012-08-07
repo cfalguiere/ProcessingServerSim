@@ -49,15 +49,18 @@ class Server {
         //println("SERVER displaying entry at position " + i);
         Conversation entry = pool.get(i);
         if (entry != null) {
-          stroke(128,128,128,128);
-          strokeWeight(1);  
-          color fillColor = entry.fillColor;
-          fill(fillColor, 255);
-          rectMode(CENTER);
-          float rad = layoutManager.clientSideRad;
-          float xpos = layoutManager.serverSideLeftMargin + 10 + rad/2;
-          float ypos = getYPos(i);
-          ellipse(xpos, ypos, rad, rad);
+          if (entry.currentState==State.StateValue.WAITING) {
+            // wait until the translation is done
+            stroke(128,128,128,128);
+            strokeWeight(1);  
+            color fillColor = entry.fillColor;
+            fill(fillColor, 255);
+            rectMode(CENTER);
+            float rad = layoutManager.clientSideRad;
+            float xpos = layoutManager.serverSideLeftMargin + 10 + rad/2;
+            float ypos = getYPos(i);
+            ellipse(xpos, ypos, rad, rad);
+          }
         }
       }
     }
