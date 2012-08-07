@@ -34,10 +34,13 @@ class Conversation {
         posInPool = server.terminatingRequest(this);
         xTranslate = layoutManager.serverSideLeftMargin;
         break;
+      case THINKING:
+        if (!stopping) {
+          scheduler.add(new Event(millis()+5000, this, State.StateValue.SENDING));
+        }
+        break;
     }
-      //TODO loop after thinking
-      //TODO timers as parameters
-      //TODO stop on click
+      //TODO variable timers 
   }
   
   void display() {

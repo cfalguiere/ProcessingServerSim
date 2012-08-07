@@ -9,6 +9,7 @@ static int eventCounter = 0;
 Server server = new Server();
 int frameCount;
 PFont f;
+boolean stopping = false;
 
 void setup() {
   size(400, 400);
@@ -37,6 +38,10 @@ void draw() {
   
   server.display();
  
+}
+
+void mousePressed() {
+  stopping = true;
 }
 
 void manageEventLoop() {
