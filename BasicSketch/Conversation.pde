@@ -4,6 +4,7 @@ class Conversation {
   float ypos;
   float rad = 20;
   State.StateValue currentState;
+  color fillColor = color(random(255),random(255), random(255));
   
   Conversation() {
     id = conversationCounter++;
@@ -15,15 +16,18 @@ class Conversation {
     currentState = pState;
     switch (currentState) {
       case STARTED:
-        //scheduler.add(new Event(millis()+1000, this));
-      break;
+        scheduler.add(new Event(millis()+1000, this, State.StateValue.SENDING));
+        break;
     }
       
   }
   
   void display() {
       stroke(128,128,128,128);
-      fill(color(random(255),random(255), random(255)));
+      int alphaValue = (currentState==State.StateValue.STARTED?255:64);
+      fill(255);
+      ellipse(xpos, ypos, rad, rad);
+      fill(fillColor, alphaValue);
       rectMode(CENTER);
       //translate(200,0);
       ellipse(xpos, ypos, rad, rad);

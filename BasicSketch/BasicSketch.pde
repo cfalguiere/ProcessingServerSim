@@ -27,7 +27,8 @@ void draw() {
     Event next = (Event)scheduler.first();
     //println("millis " + millis() + " got event at " + next.startMs ); 
     while (next!=null && next.startMs<=millis()) {
-      println("frame " + frameCount + " millis " + millis() + " displaying event " ); 
+      println("frame " + frameCount + " millis " + millis() 
+        + " displaying event for conversation " + next.conversation.id + " " + next.nextState); 
       next.conversation.changeState(next.nextState);
       next.conversation.display();
       scheduler.remove(next);
