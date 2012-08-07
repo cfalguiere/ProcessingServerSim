@@ -28,7 +28,9 @@ class Conversation {
         scheduler.add(new Event(millis()+100, this, State.StateValue.THINKING));
         break;
     }
-      
+      //TODO loop after thinking
+      //TODO timers as parameters
+      //TODO stop on click
   }
   
   void display() {
