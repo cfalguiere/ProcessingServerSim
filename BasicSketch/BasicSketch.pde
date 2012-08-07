@@ -2,11 +2,12 @@
 import java.util.TreeSet;
 
 LayoutManager layoutManager = new LayoutManager();
-TreeSet scheduler;
+List<Conversation> conversations;
+static int conversationCounter = 0;
+TreeSet<Event> scheduler;
+static int eventCounter = 0;
 Server server = new Server();
 int frameCount;
-static int conversationCounter = 0;
-static int eventCounter = 0;
 PFont f;
 
 void setup() {
@@ -16,19 +17,23 @@ void setup() {
   f = createFont("Arial",16,true); // Arial, 16 point, anti-aliasing on
   
   frameCount = 0;
+  conversations = new ArrayList<Conversation>();
+  for (int i=0; i<5; i++) {
+    conversations.add(new Conversation());
+  }
   scheduler = new TreeSet();
-  scheduler.add(new Event(1000, new Conversation()));
-  scheduler.add(new Event(1000, new Conversation()));
-  scheduler.add(new Event(2000, new Conversation()));
-  scheduler.add(new Event(3000, new Conversation()));
-
-  server.displayBox();
+  for (int i=0; i<conversations.size(); i++) {
+    scheduler.add(new Event(i*1000, conversations.get(i)));
+  }
+  
+ server.displayBox();
   
 }
  
 void draw() {
-  //background(255);
+ //background(255);
  frameCount++;
+ 
  if (scheduler.size()>0) {
     Event next = (Event)scheduler.first();
     //println("millis " + millis() + " got event at " + next.startMs ); 
