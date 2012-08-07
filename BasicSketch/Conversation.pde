@@ -90,7 +90,7 @@ class Conversation {
       ellipse(xpos, ypos, rad, rad);
   }
   
-  void displayTranslation() {
+  void displayTranslationAfter() {
       switch (currentState) {
         case SENDING:
           xTranslate = xTranslate + 10;
@@ -105,6 +105,13 @@ class Conversation {
             popMatrix();
           } 
         break;
+        default:
+        break;
+      }
+  }
+  
+  void displayTranslationBefore() {
+      switch (currentState) {
         case RECEIVING:
           //translate(x, height/2-w/2);
           xTranslate = xTranslate - 10;
@@ -123,4 +130,5 @@ class Conversation {
         break;
       }
   }
+  
 }

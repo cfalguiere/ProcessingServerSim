@@ -32,8 +32,9 @@ void draw() {
   manageEventLoop();
 
   for (int i=0; i<conversations.size(); i++) {
+    conversations.get(i).displayTranslationBefore();
     conversations.get(i).display();
-    conversations.get(i).displayTranslation();
+    conversations.get(i).displayTranslationAfter();
   }
   
   server.display();
