@@ -5,6 +5,8 @@ class Conversation {
   float rad = layoutManager.clientSideRad;
   State.StateValue currentState;
   color fillColor = color(random(150)+100,random(150)+50, random(150)+50);
+  float xTranslate;
+  int posInPool;
   
   Conversation() {
     id = conversationCounter++;
@@ -20,15 +22,16 @@ class Conversation {
         scheduler.add(new Event(millis()+1000, this, State.StateValue.SENDING));
         break;
       case SENDING:
-        scheduler.add(new Event(millis()+100, this, State.StateValue.WAITING));
-        int pos = server.incomingRequest(this);
+        scheduler.add(new Event(millis()+300, this, State.StateValue.WAITING));
+        posInPool = server.incomingRequest(this);
+        xTranslate = xpos;
         break;
       case WAITING:
         scheduler.add(new Event(millis()+5000, this, State.StateValue.RECEIVING));
         break;
       case RECEIVING:
-        scheduler.add(new Event(millis()+100, this, State.StateValue.THINKING));
-        int pos2 = server.terminatingRequest(this);
+        scheduler.add(new Event(millis()+300, this, State.StateValue.THINKING));
+        posInPool = server.terminatingRequest(this);
         break;
     }
       //TODO loop after thinking
@@ -40,7 +43,7 @@ class Conversation {
       if (currentState == State.StateValue.INITIALIZED) {
         return;
       }
-    
+      
       stroke(255);
       strokeWeight(4);  
       fill(255);
@@ -78,5 +81,24 @@ class Conversation {
       
       rectMode(CENTER);
       ellipse(xpos, ypos, rad, rad);
+  }
+  
+  void displayTranslation() {
+      switch (currentState) {
+        case SENDING:
+          //translate(x, height/2-w/2);
+          xTranslate = xTranslate + 10;
+          if (xTranslate<layoutManager.serverSideLeftMargin*2) {
+            pushMatrix();
+            translate(xTranslate, 0);
+            fill(fillColor);
+            ellipse(30, ypos, 15, 15);
+            popMatrix();
+            //TODO actual location on the server side
+          } 
+        break;
+        default:
+        break;
+      }
   }
 }

@@ -49,9 +49,13 @@ void draw() {
 
   for (int i=0; i<conversations.size(); i++) {
     conversations.get(i).display();
+    conversations.get(i).displayTranslation();
   }
   
   server.display();
+ 
+ 
+
 }
 
 //TODO translations between client and server side
