@@ -21,6 +21,8 @@ void setup() {
   scheduler.add(new Event(1000, new Conversation()));
   scheduler.add(new Event(2000, new Conversation()));
   scheduler.add(new Event(3000, new Conversation()));
+
+  server.displayBox();
   
 }
  
@@ -39,7 +41,6 @@ void draw() {
       next = (scheduler.size()>0?(Event)scheduler.first():null);
     }
   }
-  server.display();
 
 }
 
