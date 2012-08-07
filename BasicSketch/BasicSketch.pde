@@ -45,4 +45,4 @@ void draw() {
 }
 
 //TODO translations between client and server side
-
+//TODO must reset background for translate

@@ -4,7 +4,7 @@ class Conversation {
   float ypos;
   float rad = layoutManager.clientSideRad;
   State.StateValue currentState;
-  color fillColor = color(random(255),random(255), random(255));
+  color fillColor = color(random(150)+100,random(150)+50, random(150)+50);
   
   Conversation() {
     id = conversationCounter++;
