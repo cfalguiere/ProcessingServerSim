@@ -10,6 +10,7 @@ static int eventCounter = 0;
 void setup() {
   size(400, 400);
   background(255);
+  smooth();
   
   frameCount = 0;
   scheduler = new TreeSet();
