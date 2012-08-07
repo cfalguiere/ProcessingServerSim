@@ -6,6 +6,7 @@ class Conversation {
   State.StateValue currentState;
   color fillColor = color(random(150)+100,random(150)+50, random(150)+50);
   float xTranslate;
+  float yTranslate;
   int posInPool;
   
   Conversation() {
@@ -25,6 +26,7 @@ class Conversation {
         scheduler.add(new Event(millis()+300, this, State.StateValue.WAITING));
         posInPool = server.incomingRequest(this);
         xTranslate = xpos;
+        yTranslate = ypos;
         break;
       case WAITING:
         scheduler.add(new Event(millis()+5000, this, State.StateValue.RECEIVING));
@@ -33,6 +35,7 @@ class Conversation {
         scheduler.add(new Event(millis()+300, this, State.StateValue.THINKING));
         posInPool = server.terminatingRequest(this);
         xTranslate = layoutManager.serverSideLeftMargin;
+        yTranslate = server.getYPos(posInPool);
         break;
       case THINKING:
         if (!stopping) {
@@ -90,27 +93,30 @@ class Conversation {
   void displayTranslation() {
       switch (currentState) {
         case SENDING:
-          //translate(x, height/2-w/2);
           xTranslate = xTranslate + 10;
+          float yPosServer = server.getYPos(posInPool);
+          yTranslate = yTranslate + (yPosServer-ypos)/30; //TODO enlever l'approximation
+          if (yTranslate>yPosServer) yTranslate=yPosServer; // TODO constrain
           if (xTranslate<layoutManager.serverSideLeftMargin) {
             pushMatrix();
-            translate(xTranslate, 0);
+            translate(xTranslate, yTranslate);
             fill(fillColor);
-            ellipse(layoutManager.clientSideLeftMargin+rad, ypos, 15, 15);
+            ellipse(0, 0, 15, 15);
             popMatrix();
-            //TODO actual location on the server side
           } 
         break;
         case RECEIVING:
           //translate(x, height/2-w/2);
           xTranslate = xTranslate - 10;
+          float yPosServerR = server.getYPos(posInPool);
+          yTranslate = yTranslate - (yPosServerR-ypos)/30; //TODO enlever l'approximation
+          if (yTranslate>yPosServerR) yTranslate=ypos; // TODO constrain
           if (xTranslate>layoutManager.clientSideLeftMargin+rad) {
             pushMatrix();
-            translate(xTranslate, 0);
+            translate(xTranslate, yTranslate);
             fill(fillColor);
-            ellipse(-layoutManager.clientSideLeftMargin+rad, ypos, 15, 15);
+            ellipse(0,0, 15, 15);
             popMatrix();
-            //TODO actual location on the server side
           } 
         break;
         default:

@@ -36,7 +36,7 @@ class Server {
     
     void display() {
       for (int i=0; i<pool.size(); i++) {
-        println("SERVER displaying entry at position " + i);
+        //println("SERVER displaying entry at position " + i);
         Conversation entry = pool.get(i);
         if (entry != null) {
           stroke(128,128,128,128);
@@ -47,10 +47,15 @@ class Server {
           //translate(200,0);
           float rad = layoutManager.clientSideRad;
           float xpos = layoutManager.serverSideLeftMargin + 10 + rad/2;
-          float ypos = layoutManager.serverSideTopMargin + 10 + i*(rad+layoutManager.serverSideVertSpacer) + rad/2;
+          float ypos = getYPos(i);
           ellipse(xpos, ypos, rad, rad);
         }
       }
+    }
+    
+    float getYPos(int posInPool) {
+          float rad = layoutManager.clientSideRad;
+          return layoutManager.serverSideTopMargin + 10 + posInPool*(rad+layoutManager.serverSideVertSpacer) + rad/2;
     }
 
 }
