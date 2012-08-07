@@ -17,24 +17,29 @@ void setup() {
   f = createFont("Arial",16,true); // Arial, 16 point, anti-aliasing on
   
   frameCount = 0;
-  conversations = new ArrayList<Conversation>();
-  for (int i=0; i<5; i++) {
-    conversations.add(new Conversation());
-  }
-  scheduler = new TreeSet();
-  for (int i=0; i<conversations.size(); i++) {
-    scheduler.add(new Event(i*1000, conversations.get(i)));
-  }
-  
+
+  initializeLoad();  
 }
  
 void draw() {
- background(255);
+  background(255);
  
- server.displayBox();
+  server.displayBox();
   
- frameCount++;
+  frameCount++;
+  
+  manageEventLoop();
+
+  for (int i=0; i<conversations.size(); i++) {
+    conversations.get(i).display();
+    conversations.get(i).displayTranslation();
+  }
+  
+  server.display();
  
+}
+
+void manageEventLoop() {
  if (scheduler.size()>0) {
     Event next = (Event)scheduler.first();
     //println("millis " + millis() + " got event at " + next.startMs ); 
@@ -46,16 +51,16 @@ void draw() {
       next = (scheduler.size()>0?(Event)scheduler.first():null);
     }
   }
-
-  for (int i=0; i<conversations.size(); i++) {
-    conversations.get(i).display();
-    conversations.get(i).displayTranslation();
-  }
-  
-  server.display();
- 
- 
-
 }
 
+void initializeLoad() {
+  conversations = new ArrayList<Conversation>();
+  for (int i=0; i<5; i++) {
+    conversations.add(new Conversation());
+  }
+  scheduler = new TreeSet();
+  for (int i=0; i<conversations.size(); i++) {
+    scheduler.add(new Event(i*1000, conversations.get(i)));
+  }
+}
 

@@ -7,6 +7,7 @@ class Server {
       println("SERVER incoming request for conversation " 
         + pConversation.id + " at position " + pos);
       return pos;
+      //TODO reuse locations in pool
     }
     
     int terminatingRequest(Conversation pConversation) {
