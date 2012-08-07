@@ -32,6 +32,7 @@ class Conversation {
       case RECEIVING:
         scheduler.add(new Event(millis()+300, this, State.StateValue.THINKING));
         posInPool = server.terminatingRequest(this);
+        xTranslate = layoutManager.serverSideLeftMargin;
         break;
     }
       //TODO loop after thinking
@@ -88,11 +89,23 @@ class Conversation {
         case SENDING:
           //translate(x, height/2-w/2);
           xTranslate = xTranslate + 10;
-          if (xTranslate<layoutManager.serverSideLeftMargin*2) {
+          if (xTranslate<layoutManager.serverSideLeftMargin) {
             pushMatrix();
             translate(xTranslate, 0);
             fill(fillColor);
-            ellipse(30, ypos, 15, 15);
+            ellipse(layoutManager.clientSideLeftMargin+rad, ypos, 15, 15);
+            popMatrix();
+            //TODO actual location on the server side
+          } 
+        break;
+        case RECEIVING:
+          //translate(x, height/2-w/2);
+          xTranslate = xTranslate - 10;
+          if (xTranslate>layoutManager.clientSideLeftMargin+rad) {
+            pushMatrix();
+            translate(xTranslate, 0);
+            fill(fillColor);
+            ellipse(-layoutManager.clientSideLeftMargin+rad, ypos, 15, 15);
             popMatrix();
             //TODO actual location on the server side
           } 

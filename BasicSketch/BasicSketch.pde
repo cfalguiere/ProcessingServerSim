@@ -58,5 +58,4 @@ void draw() {
 
 }
 
-//TODO translations between client and server side
 
