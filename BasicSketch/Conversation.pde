@@ -6,8 +6,8 @@ class Conversation {
   
   Conversation() {
     id = conversationCounter++;
-    xpos = 10;
-    ypos = id*rad + 10;
+    xpos = layoutManager.clientSideLeftMargin + rad/2;
+    ypos = layoutManager.clientSideTopMargin + id*(rad+layoutManager.clientSideVertSpacer) + rad/2;
   }
   
   void display() {

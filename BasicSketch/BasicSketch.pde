@@ -1,6 +1,7 @@
 
 import java.util.TreeSet;
 
+LayoutManager layoutManager = new LayoutManager();
 TreeSet scheduler;
 int frameCount;
 static int conversationCounter = 0;
