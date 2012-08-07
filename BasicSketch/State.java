@@ -1,6 +1,6 @@
 class State {
   public enum StateValue {
-    STARTED, SENDING, WAITING, RECEIVING, THINKING 
+    INITIALIZED, STARTED, SENDING, WAITING, RECEIVING, THINKING 
   }
   
 }

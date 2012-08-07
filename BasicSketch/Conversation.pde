@@ -8,6 +8,7 @@ class Conversation {
   
   Conversation() {
     id = conversationCounter++;
+    currentState = State.StateValue.INITIALIZED;
     xpos = layoutManager.clientSideLeftMargin + rad/2;
     ypos = layoutManager.clientSideTopMargin + id*(rad+layoutManager.clientSideVertSpacer) + rad/2;
   }
@@ -20,12 +21,14 @@ class Conversation {
         break;
       case SENDING:
         scheduler.add(new Event(millis()+100, this, State.StateValue.WAITING));
+        int pos = server.incomingRequest(this);
         break;
       case WAITING:
-        scheduler.add(new Event(millis()+1000, this, State.StateValue.RECEIVING));
+        scheduler.add(new Event(millis()+5000, this, State.StateValue.RECEIVING));
         break;
       case RECEIVING:
         scheduler.add(new Event(millis()+100, this, State.StateValue.THINKING));
+        int pos2 = server.terminatingRequest(this);
         break;
     }
       //TODO loop after thinking
@@ -34,6 +37,10 @@ class Conversation {
   }
   
   void display() {
+      if (currentState == State.StateValue.INITIALIZED) {
+        return;
+      }
+    
       stroke(255);
       strokeWeight(4);  
       fill(255);
@@ -49,8 +56,6 @@ class Conversation {
           stroke(255,255,255,255);
           strokeWeight(4);  
           fill(fillColor, 255);
-          int pos = server.incomingRequest(this);
-          server.displayEntry(pos);
           break;
         case WAITING:
           stroke(128,128,128,128);
@@ -61,8 +66,6 @@ class Conversation {
           stroke(255,255,255,255);
           strokeWeight(4);  
           fill(fillColor, 64);
-          int pos2 = server.terminatingRequest(this);
-          server.eraseEntry(pos2);
           break;
         case THINKING:
           stroke(128,128,128,128);
