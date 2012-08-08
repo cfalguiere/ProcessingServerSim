@@ -45,6 +45,8 @@ void mousePressed() {
   stopping = true;
 }
 
+//TODO deplacer dans une classe scheduler
+//TODO calcul des temps dans le scheduler
 void manageEventLoop() {
  if (scheduler.size()>0) {
     Event next = (Event)scheduler.first();

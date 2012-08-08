@@ -28,6 +28,7 @@ class Server {
       return pos;
     }
     
+    //TODO faire dessiner par le layout manager 
     void displayBox() {
           stroke(0);
           strokeWeight(1);  
