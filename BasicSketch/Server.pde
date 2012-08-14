@@ -30,17 +30,18 @@ class Server {
     
     //TODO faire dessiner par le layout manager 
     void displayBox() {
-          stroke(0);
-          strokeWeight(1);  
-          fill(255);
-          rectMode(CORNERS);
           pushMatrix();
           translate(layoutManager.serverSideLeftMargin,layoutManager.serverSideTopMargin);
-          rect(0, 0, layoutManager.serverSideWidth, layoutManager.serverSideHeight);
           // text
           fill(0);
           textFont(f,18);
-          text("server", 0, -10);
+          text("server", 0, -4);
+          //box
+          stroke(#ABCBE5);
+          strokeWeight(1);  
+          fill(#CBDEED);
+          rectMode(CORNERS);
+          rect(0, 0, layoutManager.serverSideWidth, layoutManager.serverSideHeight);
           popMatrix();
     }
     
