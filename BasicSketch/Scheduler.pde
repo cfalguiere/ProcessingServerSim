@@ -14,7 +14,7 @@ class Scheduler {
     }
   
     int getResponseTimeRandom() {
-      return constrain(responseTimeRNG.nextValue().intValue(),0,200000);
+      return constrain(responseTimeRNG.nextValue().intValue(),0,200000) + monitor.cpuUsage*10 + monitor.cpuQueue*500;
     }
     
     int getThinkTimeRandom() {
