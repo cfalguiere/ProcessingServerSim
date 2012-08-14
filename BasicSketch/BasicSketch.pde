@@ -42,6 +42,7 @@ void draw() {
   server.display();
   
   monitor.displayServerPoolStats();
+  monitor.displayRequestsStats();
 }
 
 void mousePressed() {

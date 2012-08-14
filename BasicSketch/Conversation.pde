@@ -25,12 +25,14 @@ class Conversation {
     switch (currentState) {
       case STARTED:
         scheduler.add(new Event(millis()+1000, this, State.StateValue.SENDING));
+        monitor.incConversationStartedCount();
         break;
       case SENDING:
         scheduler.add(new Event(millis()+300, this, State.StateValue.WAITING));
         posInPool = server.incomingRequest(this);
         xTranslate = layoutManager.clientSideLeftMargin + xpos;
         yTranslate = layoutManager.clientSideTopMargin + ypos;
+        monitor.incPendingRequestsCount();
         break;
       case WAITING:
         scheduler.add(new Event(millis()+5000, this, State.StateValue.RECEIVING));
@@ -40,6 +42,8 @@ class Conversation {
         posInPool = server.terminatingRequest(this);
         xTranslate = layoutManager.serverPoolLeftMargin;
         yTranslate = layoutManager.serverPoolTopMargin + server.getYPos(posInPool);
+        monitor.decPendingRequestsCount();
+        monitor.incTotalRequestsCount();
         break;
       case THINKING:
         if (!stopping) {
