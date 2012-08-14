@@ -9,4 +9,5 @@ class OptionsManager {
   int thinkTimeMean = 5000;
   float thinkTimeSD = 500;
 
+  //boolean showResourceUsage = true;
 }

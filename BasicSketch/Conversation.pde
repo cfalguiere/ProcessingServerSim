@@ -12,6 +12,7 @@ class Conversation {
   int posInPool;
   int currentResponseTime;
   
+  
   Conversation() {
     id = conversationCounter++;
     currentState = State.StateValue.INITIALIZED;
@@ -25,35 +26,29 @@ class Conversation {
     currentState = pState;
     switch (currentState) {
       case STARTED:
-        schedulerEvents.add(new Event(millis()+1000, this, State.StateValue.SENDING));
+        scheduler.scheduleSendRequest(this);
         monitor.incConversationStartedCount();
         break;
       case SENDING:
-        schedulerEvents.add(new Event(millis()+300, this, State.StateValue.WAITING));
+        scheduler.scheduleSending(this);
         posInPool = server.incomingRequest(this);
         xTranslate = layoutManager.clientSideLeftMargin + xpos;
         yTranslate = layoutManager.clientSideTopMargin + ypos;
         monitor.incPendingRequestsCount();
         break;
       case WAITING:
-        currentResponseTime = scheduler.getResponseTimeRandom();
-        println(id + " Waiting " + currentResponseTime);
-        schedulerEvents.add(new Event(millis()+currentResponseTime, this, State.StateValue.RECEIVING));
+        scheduler.scheduleResponse(this);
         break;
       case RECEIVING:
-        schedulerEvents.add(new Event(millis()+300, this, State.StateValue.THINKING));
+        scheduler.scheduleReceiving(this);
         posInPool = server.terminatingRequest(this);
         xTranslate = layoutManager.serverPoolLeftMargin;
         yTranslate = layoutManager.serverPoolTopMargin + server.getYPos(posInPool);
         monitor.decPendingRequestsCount();
-        monitor.reportResponseTime(currentResponseTime);
         monitor.incTotalRequestsCount();
         break;
       case THINKING:
-        if (!stopping) {
-          int thinktime = scheduler.getThinkTimeRandom();
-          schedulerEvents.add(new Event(millis()+thinktime, this, State.StateValue.SENDING));
-        }
+        scheduler.scheduleThinkTime(this);
         break;
     }
   }

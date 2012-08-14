@@ -5,14 +5,14 @@ class Event implements Comparable<Event> {
   State.StateValue nextState;
   
   Event(long tempStartMs, Conversation tempConversation) {
-    id = eventCounter++;
+    id = scheduler.eventCounter++;
     startMs = tempStartMs;
     conversation = tempConversation;
     nextState = State.StateValue.STARTED;
   }
   
   Event(long tempStartMs, Conversation tempConversation, State.StateValue tempNextState) {
-    id = eventCounter++;
+    id = scheduler.eventCounter++;
     startMs = tempStartMs;
     conversation = tempConversation;
     nextState = tempNextState;
