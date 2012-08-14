@@ -68,7 +68,7 @@ void initializeLoad() {
   }
   scheduler = new TreeSet();
   for (int i=0; i<conversations.size(); i++) {
-    scheduler.add(new Event(i*1000, conversations.get(i)));
+    scheduler.add(new Event(i*1000+1000, conversations.get(i)));
   }
 }
 
