@@ -25,7 +25,7 @@ void setup() {
 void draw() {
   background(255);
  
-  server.displayBox();
+  layoutManager.displayServerBox();
   
   frameCount++;
   

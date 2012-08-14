@@ -28,22 +28,6 @@ class Server {
       return pos;
     }
     
-    //TODO faire dessiner par le layout manager 
-    void displayBox() {
-          pushMatrix();
-          translate(layoutManager.serverSideLeftMargin,layoutManager.serverSideTopMargin);
-          // text
-          fill(0);
-          textFont(f,18);
-          text("server", 0, -4);
-          //box
-          stroke(#ABCBE5);
-          strokeWeight(1);  
-          fill(#CBDEED);
-          rectMode(CORNERS);
-          rect(0, 0, layoutManager.serverSideWidth, layoutManager.serverSideHeight);
-          popMatrix();
-    }
     
     void display() {
       for (int i=0; i<pool.size(); i++) {
@@ -58,11 +42,10 @@ class Server {
             fill(fillColor, 255);
             rectMode(CENTER);
             pushMatrix();
-            translate(layoutManager.serverSideLeftMargin,layoutManager.serverSideTopMargin);
+            translate(layoutManager.serverPoolLeftMargin,layoutManager.serverPoolTopMargin);
             float rad = layoutManager.clientSideRad;
-            float xpos = 10 + rad/2;
             float ypos = getYPos(i);
-            ellipse(xpos, ypos, rad, rad);
+            ellipse(rad/2, ypos, rad, rad);
             popMatrix();
           }
         }
@@ -71,7 +54,7 @@ class Server {
     
     float getYPos(int posInPool) {
           float rad = layoutManager.clientSideRad;
-          return 10 + posInPool*(rad+layoutManager.serverSideVertSpacer) + rad/2;
+          return posInPool*(rad+layoutManager.serverSideVertSpacer) + rad/2;
     }
 
 }

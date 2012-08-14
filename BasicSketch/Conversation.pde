@@ -34,8 +34,8 @@ class Conversation {
       case RECEIVING:
         scheduler.add(new Event(millis()+300, this, State.StateValue.THINKING));
         posInPool = server.terminatingRequest(this);
-        xTranslate = layoutManager.serverSideLeftMargin;
-        yTranslate = layoutManager.serverSideTopMargin + server.getYPos(posInPool);
+        xTranslate = layoutManager.serverPoolLeftMargin;
+        yTranslate = layoutManager.serverPoolTopMargin + server.getYPos(posInPool);
         break;
       case THINKING:
         if (!stopping) {
@@ -97,14 +97,14 @@ class Conversation {
       switch (currentState) {
         case SENDING:
           xTranslate = xTranslate + 10;
-          float yPosServer = layoutManager.serverSideTopMargin + server.getYPos(posInPool);
+          float yPosServer = layoutManager.serverPoolTopMargin + server.getYPos(posInPool);
           yTranslate = yTranslate + (yPosServer-ypos)/30; //TODO enlever l'approximation
           if (yTranslate>yPosServer) yTranslate=yPosServer; // TODO constrain
-          if (xTranslate<layoutManager.serverSideLeftMargin) {
+          if (xTranslate<layoutManager.serverPoolLeftMargin) {
             pushMatrix();
             translate(xTranslate, yTranslate);
             fill(fillColor);
-            ellipse(0, 0, 15, 15);
+            ellipse(0, 0, 15, 15); //TODO parameter
             popMatrix();
           } 
         break;
@@ -118,7 +118,7 @@ class Conversation {
         case RECEIVING:
           //translate(x, height/2-w/2);
           xTranslate = xTranslate - 10;
-          float yPosServerR = layoutManager.serverSideTopMargin + server.getYPos(posInPool);
+          float yPosServerR = layoutManager.serverPoolTopMargin + server.getYPos(posInPool);
           yTranslate = yTranslate - (yPosServerR-ypos)/30; //TODO enlever l'approximation
           if (yTranslate>yPosServerR) yTranslate=ypos; // TODO constrain
           if (xTranslate>layoutManager.clientSideLeftMargin+rad) {
