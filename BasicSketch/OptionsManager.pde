@@ -9,10 +9,12 @@ class OptionsManager {
   int thinkTimeMean = 5000;
   float thinkTimeSD = 500;
 
-  int memoryPerRequest = 10000;
-  int poolSaturation = 20; // pool = 20 -> 100% CPU
-  int memoryGCThreshold=1000000;
-  int gcDuration=10;
+  int memoryPerRequest = 15000;
+  int poolSaturation = 30; // pool = 20 -> 100% CPU
   
   boolean showResourceUsageImpact = true;
+  int cpuImpactCoef=10;
+  int cpuQueueImpactCoef=100;
+  int memoryGCThreshold=1000000;
+  int gcDuration=20;
 }
