@@ -15,7 +15,7 @@ class LayoutManager {
   
     void displayServerBox() {
           pushMatrix();
-          translate(layoutManager.serverSideLeftMargin,layoutManager.serverSideTopMargin);
+          translate(layoutManager.serverBoxLeftMargin,layoutManager.serverBoxTopMargin);
           // text
           fill(0);
           textFont(f,18);
@@ -25,7 +25,7 @@ class LayoutManager {
           strokeWeight(1);  
           fill(#CBDEED);
           rectMode(CORNERS);
-          rect(0, 0, layoutManager.serverSideWidth, layoutManager.serverSideHeight);
+          rect(0, 0, layoutManager.serverBoxWidth, layoutManager.serverBoxHeight);
           popMatrix();
           displayServerPool();
     }

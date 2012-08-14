@@ -7,12 +7,13 @@ static int conversationCounter = 0;
 TreeSet<Event> scheduler;
 static int eventCounter = 0;
 Server server = new Server();
+Monitor monitor = new Monitor();
 int frameCount;
 PFont f;
 boolean stopping = false;
 
 void setup() {
-  size(400, 400);
+  size(600, 400);
   background(255);
   smooth();
   f = createFont("Arial",16,true); // Arial, 16 point, anti-aliasing on
@@ -38,7 +39,8 @@ void draw() {
   }
   
   server.display();
- 
+  
+  monitor.displayServerPoolStats();
 }
 
 void mousePressed() {

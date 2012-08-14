@@ -1,5 +1,6 @@
 class Server { 
     List<Conversation> pool = new ArrayList<Conversation>();
+    int poolBusy = 0;
     
     int incomingRequest(Conversation pConversation) {
       int pos = -1;
@@ -17,6 +18,7 @@ class Server {
       }  
       println("SERVER incoming request for conversation " 
         + pConversation.id + " at position " + pos);
+      poolBusy++;
       return pos;
     }
     
@@ -25,6 +27,7 @@ class Server {
       pool.set(pos, null);
       println("SERVER terminating request for conversation " 
         + pConversation.id + " at position " + pos);
+      poolBusy--;
       return pos;
     }
     
@@ -54,7 +57,7 @@ class Server {
     
     float getYPos(int posInPool) {
           float rad = layoutManager.clientSideRad;
-          return posInPool*(rad+layoutManager.serverSideVertSpacer) + rad/2;
+          return posInPool*(rad+layoutManager.serverBoxVertSpacer) + rad/2;
     }
 
 }
