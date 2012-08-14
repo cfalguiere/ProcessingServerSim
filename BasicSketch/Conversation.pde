@@ -2,6 +2,8 @@ class Conversation {
   int id;
   float xpos;
   float ypos;
+  int col;
+  int raw;
   float rad = layoutManager.clientSideRad;
   State.StateValue currentState;
   color fillColor = color(random(150)+100,random(150)+50, random(150)+50);
@@ -12,8 +14,10 @@ class Conversation {
   Conversation() {
     id = conversationCounter++;
     currentState = State.StateValue.INITIALIZED;
-    xpos = rad/2;
-    ypos = id*(rad+layoutManager.clientSideVertSpacer) + rad/2;
+    raw = id%3;
+    col = id/3;
+    xpos = col*(rad+layoutManager.clientSideVertSpacer) + rad/2;
+    ypos = raw*(rad+layoutManager.clientSideVertSpacer) + rad/2;
   }
   
   void changeState(State.StateValue pState) {

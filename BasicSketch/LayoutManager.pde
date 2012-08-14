@@ -6,8 +6,8 @@ class LayoutManager {
   
   int serverBoxTopMargin = 30;
   int serverBoxLeftMargin = 300;
-  int serverBoxHeight = 300;
-  int serverBoxWidth = 50;
+  int serverBoxHeight = 400 - serverBoxTopMargin*2;
+  int serverBoxWidth = 150;
   int serverBoxVertSpacer = 2;
   
   int serverPoolLeftMargin = serverBoxLeftMargin + 3;
