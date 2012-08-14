@@ -72,7 +72,8 @@ void initializeLoad() {
   }
   scheduler = new TreeSet();
   for (int i=0; i<conversations.size(); i++) {
-    scheduler.add(new Event(i*1000+1000, conversations.get(i)));
+    int startOffset = optionsManager.startDelayMs + (i*1000/optionsManager.rampupS);
+    scheduler.add(new Event(startOffset, conversations.get(i)));
   }
 }
 

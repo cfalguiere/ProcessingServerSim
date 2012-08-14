@@ -9,8 +9,10 @@ class Monitor {
           // text
           fill(0);
           textFont(f,14);
-          text("size " + server.pool.size(), 0, 0);
-          text("busy " + server.poolBusy, 0, 20);
+          text("size " + "busy", 0, 0);
+          textFont(f,22);
+          String values = String.format("%02d %02d", server.pool.size(), server.poolBusy);
+          text(values, 0, 20);
           popMatrix();
     }
 
@@ -20,8 +22,10 @@ class Monitor {
           // text
           fill(0);
           textFont(f,14);
-          text("users: " + conversationStartedCount + " - pending requests: " + pendingRequestsCount, 0, 0);
-          text("total requests: " + totalRequestsCount + " - " + totalRequestsCount*1000/millis() + "/s", 0, 20);
+          text("users   requests", 0, 0);
+          textFont(f,22);
+          String values = String.format("%03d  %03d - %02d/s",  conversationStartedCount,  pendingRequestsCount, totalRequestsCount*1000/millis());
+          text(values, 0, 20);
           popMatrix();
     }
     
