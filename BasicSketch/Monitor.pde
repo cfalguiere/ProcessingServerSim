@@ -6,7 +6,7 @@ class Monitor {
 
     void displayServerPoolStats() {
           pushMatrix();
-          translate(layoutManager.serverPoolLeftMargin+layoutManager.serverBoxWidth,layoutManager.serverPoolTopMargin);
+          translate(layoutManager.serverPoolLeftMargin+layoutManager.serverBoxWidth/2,layoutManager.serverPoolTopMargin - 24);
           // text
           fill(0);
           textFont(f,14);

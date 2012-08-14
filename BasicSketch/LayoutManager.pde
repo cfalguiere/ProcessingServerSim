@@ -12,7 +12,7 @@ class LayoutManager {
   int serverBoxVertSpacer = 2;
   
   int serverPoolLeftMargin = serverBoxLeftMargin + 3;
-  int serverPoolTopMargin = serverBoxTopMargin + 50;
+  int serverPoolTopMargin = serverBoxTopMargin + 70;
   int serverPoolMaxRows = 10;
   
     void displayServerBox() {
@@ -38,7 +38,7 @@ class LayoutManager {
           // text
           fill(0);
           textFont(f,14);
-          text("pool", 0, -4);
+          text("pool", 0, -24);
           //box
           // TOOD when limited pool size
           //stroke(178);
