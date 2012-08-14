@@ -61,8 +61,8 @@ class Monitor {
           textFont(f,14);
           text("CPU Usage", 0, 10);
           text("CPU Queue", 0, 50);
-          text("Memory", 0, 90);
-          text("GC Pauses ", 0, 130);
+          text("Memory", 0, 95);
+          text("GC Pauses ", 0, 135);
           // bars
           fill(255*cpuUsage/100,255*(100-cpuUsage)/100,128);
           noStroke();
@@ -72,9 +72,12 @@ class Monitor {
           rect(0, 55, cpuQueue, 75);
           // text memory
           fill(0);
+          textFont(f,16);
+          text(String.format("%02d%%",cpuUsage), cpuUsage + 5, 30);
+          text(String.format("%02d",cpuQueue), cpuQueue + 5, 70);
           textFont(f,18);
-          text(formatter.format(usedMemory), 0, 110);
-          text(formatter.format(gcPauses), 0, 150);
+          text(formatter.format(usedMemory), 0, 115);
+          text(formatter.format(gcPauses), 0, 155);
           popMatrix();
     }
     

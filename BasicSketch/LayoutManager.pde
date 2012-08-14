@@ -6,7 +6,7 @@ class LayoutManager {
   int clientSideMaxRows = 12;
   
   int serverBoxTopMargin = 30;
-  int serverBoxLeftMargin = 300;
+  int serverBoxLeftMargin = 275;
   int serverBoxHeight = 400 - serverBoxTopMargin*2;
   int serverBoxWidth = 150;
   int serverBoxVertSpacer = 2;
