@@ -50,9 +50,9 @@ class Monitor {
     }
 
     void  displayResourceUsage() {
-        // pool = 20 -> 100% CPU
-        cpuUsage = constrain(poolBusy*5, 0, 100);
-        cpuQueue = constrain(poolBusy - 20, 0, 10000);
+        
+        cpuUsage = constrain(poolBusy*(100/optionsManager.poolSaturation), 0, 100);
+        cpuQueue = constrain(poolBusy - optionsManager.poolSaturation, 0, 10000);
           pushMatrix();
           translate(layoutManager.serverBoxLeftMargin+layoutManager.serverBoxWidth + 10,layoutManager.serverBoxTopMargin + 10);
           // text
@@ -81,7 +81,7 @@ class Monitor {
     void incConversationStartedCount() {conversationStartedCount++;}
     void incTotalRequestsCount() {
       totalRequestsCount++;
-      usedMemory+=10000;
+      usedMemory += optionsManager.memoryPerRequest;
     }
     void incPendingRequestsCount() {pendingRequestsCount++;}
     void decPendingRequestsCount() {pendingRequestsCount--;}
