@@ -3,6 +3,7 @@ class Monitor {
     int totalRequestsCount = 0;
     int pendingRequestsCount = 0;
     long cumResponseTime = 0;
+    int poolBusy = 0;
 
     void displayServerPoolStats() {
           pushMatrix();
@@ -12,7 +13,7 @@ class Monitor {
           textFont(f,14);
           text("size " + "busy", 0, 0);
           textFont(f,22);
-          String values = String.format("%02d %02d", server.pool.size(), server.poolBusy);
+          String values = String.format("%02d %02d", server.pool.size(), poolBusy);
           text(values, 0, 20);
           popMatrix();
     }
@@ -35,6 +36,8 @@ class Monitor {
           popMatrix();
     }
     
+    void incPoolBusyCount() {poolBusy++;}
+    void decPoolBusyCount() {poolBusy--;}
     void incConversationStartedCount() {conversationStartedCount++;}
     void incTotalRequestsCount() {totalRequestsCount++;}
     void incPendingRequestsCount() {pendingRequestsCount++;}
