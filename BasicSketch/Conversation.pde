@@ -10,6 +10,7 @@ class Conversation {
   float xTranslate;
   float yTranslate;
   int posInPool;
+  int currentResponseTime = 5000;
   
   Conversation() {
     id = conversationCounter++;
@@ -35,7 +36,7 @@ class Conversation {
         monitor.incPendingRequestsCount();
         break;
       case WAITING:
-        scheduler.add(new Event(millis()+5000, this, State.StateValue.RECEIVING));
+        scheduler.add(new Event(millis()+currentResponseTime, this, State.StateValue.RECEIVING));
         break;
       case RECEIVING:
         scheduler.add(new Event(millis()+300, this, State.StateValue.THINKING));
@@ -43,6 +44,7 @@ class Conversation {
         xTranslate = layoutManager.serverPoolLeftMargin;
         yTranslate = layoutManager.serverPoolTopMargin + server.getYPos(posInPool);
         monitor.decPendingRequestsCount();
+        monitor.reportResponseTime(currentResponseTime);
         monitor.incTotalRequestsCount();
         break;
       case THINKING:
