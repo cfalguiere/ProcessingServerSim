@@ -12,11 +12,11 @@ class Scheduler {
     }
   
     int getResponseTimeRandom() {
-      return responseTimeRNG.nextValue().intValue();
+      return constrain(responseTimeRNG.nextValue().intValue(),0,200000);
     }
     
     int getThinkTimeRandom() {
-      return thinkTimeRNG.nextValue().intValue();
+      return constrain(thinkTimeRNG.nextValue().intValue(),0,10000);
     }
     
     void scheduleSendRequest(Conversation conversation) {
