@@ -1,3 +1,5 @@
+import java.text.DecimalFormatSymbols;
+
 class Monitor { 
     int conversationStartedCount = 0;
     int totalRequestsCount = 0;
@@ -6,6 +8,15 @@ class Monitor {
     int poolBusy = 0;
     int cpuUsage;
     int cpuQueue;
+    int usedMemory;
+    DecimalFormat formatter;
+    
+    Monitor() {
+      DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+      symbols.setGroupingSeparator(' ');
+      formatter = new DecimalFormat("###,###.##", symbols);
+    }
+    
 
     void displayServerPoolStats() {
           pushMatrix();
@@ -43,26 +54,35 @@ class Monitor {
         cpuUsage = constrain(poolBusy*5, 0, 100);
         cpuQueue = constrain(poolBusy - 20, 0, 10000);
           pushMatrix();
-          translate(layoutManager.serverBoxLeftMargin+layoutManager.serverBoxWidth + 10,layoutManager.serverBoxTopMargin);
+          translate(layoutManager.serverBoxLeftMargin+layoutManager.serverBoxWidth + 10,layoutManager.serverBoxTopMargin + 10);
           // text
           fill(0);
           textFont(f,14);
           text("CPU Usage", 0, 10);
           text("CPU Queue", 0, 50);
+          text("Memory", 0, 90);
           // bars
-          fill(255*cpuUsage/100,255*(100-cpuUsage)/100,64);
+          fill(255*cpuUsage/100,255*(100-cpuUsage)/100,128);
           noStroke();
           rectMode(CORNERS);
           rect(0, 15, cpuUsage, 35);
           fill(64,64,64);
           rect(0, 55, cpuQueue, 75);
+          // text memory
+          fill(0);
+          textFont(f,18);
+
+          text(formatter.format(usedMemory), 0, 110);
           popMatrix();
     }
     
     void incPoolBusyCount() {poolBusy++;}
     void decPoolBusyCount() {poolBusy--;}
     void incConversationStartedCount() {conversationStartedCount++;}
-    void incTotalRequestsCount() {totalRequestsCount++;}
+    void incTotalRequestsCount() {
+      totalRequestsCount++;
+      usedMemory+=10000;
+    }
     void incPendingRequestsCount() {pendingRequestsCount++;}
     void decPendingRequestsCount() {pendingRequestsCount--;}
     void reportResponseTime(int duration) {cumResponseTime+=duration;}
