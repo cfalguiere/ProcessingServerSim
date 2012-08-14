@@ -47,17 +47,25 @@ class Server {
             pushMatrix();
             translate(layoutManager.serverPoolLeftMargin,layoutManager.serverPoolTopMargin);
             float rad = layoutManager.clientSideRad;
+            float xpos = getXPos(i);
             float ypos = getYPos(i);
-            ellipse(rad/2, ypos, rad, rad);
+            ellipse(xpos, ypos, rad, rad);
             popMatrix();
           }
         }
       }
     }
     
+    float getXPos(int posInPool) {
+          float rad = layoutManager.clientSideRad;
+          int col = posInPool / layoutManager.serverPoolMaxRows;
+          return col*(rad+layoutManager.serverBoxVertSpacer) + rad/2;
+    }
+    
     float getYPos(int posInPool) {
           float rad = layoutManager.clientSideRad;
-          return posInPool*(rad+layoutManager.serverBoxVertSpacer) + rad/2;
+          int row = posInPool % layoutManager.serverPoolMaxRows;
+          return row*(rad+layoutManager.serverBoxVertSpacer) + rad/2;
     }
-
+//TODO vector
 }

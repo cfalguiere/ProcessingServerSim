@@ -13,6 +13,7 @@ class LayoutManager {
   
   int serverPoolLeftMargin = serverBoxLeftMargin + 3;
   int serverPoolTopMargin = serverBoxTopMargin + 50;
+  int serverPoolMaxRows = 10;
   
     void displayServerBox() {
           pushMatrix();
