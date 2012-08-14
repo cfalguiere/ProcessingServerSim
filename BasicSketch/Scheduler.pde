@@ -33,6 +33,10 @@ class Scheduler {
         schedulerEvents.add(new Event(millis()+300, conversation, State.StateValue.WAITING));
     }
     
+    void scheduleDoing(Conversation conversation) {
+        schedulerEvents.add(new Event(millis()+300, conversation, State.StateValue.DOING));
+    }
+    
     void scheduleResponse(Conversation conversation) {
         conversation.currentResponseTime = scheduler.getResponseTimeRandom();
         println(conversation.id + " Waiting " +  conversation.currentResponseTime);

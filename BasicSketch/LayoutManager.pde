@@ -31,8 +31,17 @@ class LayoutManager {
           fill(#CBDEED);
           rectMode(CORNERS);
           rect(0, 0, layoutManager.serverBoxWidth, layoutManager.serverBoxHeight);
+          displayServerBacklog();
           popMatrix();
           displayServerPool();
+    }
+
+    void displayServerBacklog() {
+      if (optionsManager.useMaxPoolSize) {
+          fill(0);
+          textFont(f,14);
+          text("backlog", 3, 20);
+      }
     }
 
     void displayServerPool() {

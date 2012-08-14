@@ -41,10 +41,12 @@ void draw() {
     conversations.get(i).display();
     conversations.get(i).displayTranslationAfter();
   }
+  server.checkBacklog();
   
   server.display();
   
   monitor.displayServerPoolStats();
+  monitor.displayBacklogStatus();
   monitor.displayRequestsStats();
   monitor.displayResourceUsage();
 }

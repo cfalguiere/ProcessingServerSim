@@ -28,12 +28,14 @@ class Conversation {
         break;
       case SENDING:
         scheduler.scheduleSending(this);
-        posInPool = server.incomingRequest(this);
-        xTranslate = layoutManager.clientSideLeftMargin + xpos;
-        yTranslate = layoutManager.clientSideTopMargin + ypos;
-        monitor.incPendingRequestsCount();
         break;
       case WAITING:
+        posInPool = server.incomingRequest(this);
+        monitor.incPendingRequestsCount();
+        xTranslate = layoutManager.clientSideLeftMargin + xpos;
+        yTranslate = layoutManager.clientSideTopMargin + ypos;
+        break;
+      case DOING:
         scheduler.scheduleResponse(this);
         break;
       case RECEIVING:
@@ -73,6 +75,7 @@ class Conversation {
           strokeWeight(4);  
           fill(fillColor, 255);
           break;
+        case DOING:
         case WAITING:
           stroke(128,128,128,128);
           strokeWeight(1);  

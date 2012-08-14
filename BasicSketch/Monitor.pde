@@ -32,6 +32,18 @@ class Monitor {
           popMatrix();
     }
 
+    void displayBacklogStatus() {
+      if (optionsManager.useMaxPoolSize) {
+          pushMatrix();
+          translate(layoutManager.serverBoxLeftMargin,layoutManager.serverBoxTopMargin);
+          fill(0);
+          textFont(f,16);
+          String value = String.format("%02d", server.backlog.size());
+          text(value, 60, 22);
+          popMatrix();
+      }
+    }
+
     void displayRequestsStats() {
           pushMatrix();
           translate(layoutManager.clientSideLeftMargin,20);

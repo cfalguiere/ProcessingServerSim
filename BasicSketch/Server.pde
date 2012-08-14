@@ -1,5 +1,6 @@
 class Server { 
     List<Conversation> pool = new ArrayList<Conversation>();
+    List<Conversation> backlog = new ArrayList<Conversation>();
     
     int incomingRequest(Conversation pConversation) {
       int pos = -1;
@@ -11,17 +12,27 @@ class Server {
       }
       if (pos >= 0) {
         pool.set(pos, pConversation);
+        scheduler.scheduleDoing(pConversation);
+        //TODO factorise on pool
+        monitor.incPoolBusyCount();
       } else {
-        pool.add(pConversation);
-        pos = pool.size()-1;
+        if (optionsManager.useMaxPoolSize && pool.size()>=optionsManager.maxPoolSize) {
+          backlog.add(pConversation);
+          //TODO real response time in conversation
+        } else {
+          pool.add(pConversation);
+          scheduler.scheduleDoing(pConversation);
+          monitor.incPoolBusyCount();
+          pos = pool.size()-1;
+        }
       }  
       println("SERVER incoming request for conversation " 
         + pConversation.id + " at position " + pos);
-      monitor.incPoolBusyCount();
       return pos;
     }
     
     int terminatingRequest(Conversation pConversation) {
+      //TODO c'est pas au client de faire ça
       int pos = pool.indexOf(pConversation);
       pool.set(pos, null);
       println("SERVER terminating request for conversation " 
@@ -30,6 +41,16 @@ class Server {
       return pos;
     }
     
+    
+    void checkBacklog() {
+      while (monitor.poolBusy<pool.size() && backlog.size()>0) {
+        Conversation conversation = backlog.get(0);
+        int pos = incomingRequest(conversation);
+        println("SERVER moving conversation " 
+        + conversation.id + " from backlog to pool at position " + pos);
+        backlog.remove(conversation);
+      }
+    }
     
     void display() {
       for (int i=0; i<pool.size(); i++) {
