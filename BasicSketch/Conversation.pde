@@ -10,7 +10,7 @@ class Conversation {
   float xTranslate;
   float yTranslate;
   int posInPool;
-  int currentResponseTime = 5000;
+  int currentResponseTime;
   
   Conversation() {
     id = conversationCounter++;
@@ -25,21 +25,23 @@ class Conversation {
     currentState = pState;
     switch (currentState) {
       case STARTED:
-        scheduler.add(new Event(millis()+1000, this, State.StateValue.SENDING));
+        schedulerEvents.add(new Event(millis()+1000, this, State.StateValue.SENDING));
         monitor.incConversationStartedCount();
         break;
       case SENDING:
-        scheduler.add(new Event(millis()+300, this, State.StateValue.WAITING));
+        schedulerEvents.add(new Event(millis()+300, this, State.StateValue.WAITING));
         posInPool = server.incomingRequest(this);
         xTranslate = layoutManager.clientSideLeftMargin + xpos;
         yTranslate = layoutManager.clientSideTopMargin + ypos;
         monitor.incPendingRequestsCount();
         break;
       case WAITING:
-        scheduler.add(new Event(millis()+currentResponseTime, this, State.StateValue.RECEIVING));
+        currentResponseTime = scheduler.getResponseTimeRandom();
+        println(id + " Waiting " + currentResponseTime);
+        schedulerEvents.add(new Event(millis()+currentResponseTime, this, State.StateValue.RECEIVING));
         break;
       case RECEIVING:
-        scheduler.add(new Event(millis()+300, this, State.StateValue.THINKING));
+        schedulerEvents.add(new Event(millis()+300, this, State.StateValue.THINKING));
         posInPool = server.terminatingRequest(this);
         xTranslate = layoutManager.serverPoolLeftMargin;
         yTranslate = layoutManager.serverPoolTopMargin + server.getYPos(posInPool);
@@ -49,11 +51,11 @@ class Conversation {
         break;
       case THINKING:
         if (!stopping) {
-          scheduler.add(new Event(millis()+5000, this, State.StateValue.SENDING));
+          int thinktime = scheduler.getThinkTimeRandom();
+          schedulerEvents.add(new Event(millis()+thinktime, this, State.StateValue.SENDING));
         }
         break;
     }
-      //TODO variable timers 
   }
   
   void display() {
