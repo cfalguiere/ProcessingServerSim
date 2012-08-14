@@ -34,15 +34,14 @@ class Server {
           strokeWeight(1);  
           fill(255);
           rectMode(CORNERS);
-          rect(layoutManager.serverSideLeftMargin,
-            layoutManager.serverSideTopMargin,
-            layoutManager.serverSideLeftMargin + layoutManager.serverSideWidth,
-            layoutManager.serverSideTopMargin + layoutManager.serverSideHeight);
+          pushMatrix();
+          translate(layoutManager.serverSideLeftMargin,layoutManager.serverSideTopMargin);
+          rect(0, 0, layoutManager.serverSideWidth, layoutManager.serverSideHeight);
           // text
           fill(0);
           textFont(f,18);
-          text("server", layoutManager.serverSideLeftMargin,
-            layoutManager.serverSideTopMargin-10);
+          text("server", 0, -10);
+          popMatrix();
     }
     
     void display() {
@@ -57,10 +56,13 @@ class Server {
             color fillColor = entry.fillColor;
             fill(fillColor, 255);
             rectMode(CENTER);
+            pushMatrix();
+            translate(layoutManager.serverSideLeftMargin,layoutManager.serverSideTopMargin);
             float rad = layoutManager.clientSideRad;
-            float xpos = layoutManager.serverSideLeftMargin + 10 + rad/2;
+            float xpos = 10 + rad/2;
             float ypos = getYPos(i);
             ellipse(xpos, ypos, rad, rad);
+            popMatrix();
           }
         }
       }
@@ -68,7 +70,7 @@ class Server {
     
     float getYPos(int posInPool) {
           float rad = layoutManager.clientSideRad;
-          return layoutManager.serverSideTopMargin + 10 + posInPool*(rad+layoutManager.serverSideVertSpacer) + rad/2;
+          return 10 + posInPool*(rad+layoutManager.serverSideVertSpacer) + rad/2;
     }
 
 }
