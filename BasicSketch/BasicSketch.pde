@@ -42,6 +42,7 @@ void draw() {
   
   monitor.displayServerPoolStats();
   monitor.displayRequestsStats();
+  monitor.displayResourceUsage();
 }
 
 

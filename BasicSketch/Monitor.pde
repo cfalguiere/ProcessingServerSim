@@ -4,6 +4,8 @@ class Monitor {
     int pendingRequestsCount = 0;
     long cumResponseTime = 0;
     int poolBusy = 0;
+    int cpuUsage;
+    int cpuQueue;
 
     void displayServerPoolStats() {
           pushMatrix();
@@ -33,6 +35,27 @@ class Monitor {
             values = String.format("%s  %04dms",  values, avgResponseTime);  
           }
           text(values, 0, 20);
+          popMatrix();
+    }
+
+    void  displayResourceUsage() {
+        // pool = 20 -> 100% CPU
+        cpuUsage = constrain(poolBusy*5, 0, 100);
+        cpuQueue = constrain(poolBusy - 20, 0, 10000);
+          pushMatrix();
+          translate(layoutManager.serverBoxLeftMargin+layoutManager.serverBoxWidth + 10,layoutManager.serverBoxTopMargin);
+          // text
+          fill(0);
+          textFont(f,14);
+          text("CPU Usage", 0, 10);
+          text("CPU Queue", 0, 50);
+          // bars
+          fill(255*cpuUsage/100,255*(100-cpuUsage)/100,64);
+          noStroke();
+          rectMode(CORNERS);
+          rect(0, 15, cpuUsage, 35);
+          fill(64,64,64);
+          rect(0, 55, cpuQueue, 75);
           popMatrix();
     }
     
