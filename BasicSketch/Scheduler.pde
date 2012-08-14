@@ -14,8 +14,11 @@ class Scheduler {
     }
   
     int getResponseTimeRandom() {
-      return constrain(responseTimeRNG.nextValue().intValue(),0,200000) 
-          + monitor.cpuUsage*optionsManager.cpuImpactCoef + monitor.cpuQueue*optionsManager.cpuQueueImpactCoef;
+        int rt = constrain(responseTimeRNG.nextValue().intValue(),0,200000);
+        if (optionsManager.showResourceUsageImpact) {
+          rt += monitor.cpuUsage*optionsManager.cpuImpactCoef + monitor.cpuQueue*optionsManager.cpuQueueImpactCoef;
+        }
+        return rt;
     }
     
     int getThinkTimeRandom() {

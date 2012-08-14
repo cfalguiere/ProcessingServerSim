@@ -12,7 +12,7 @@ class OptionsManager {
   int memoryPerRequest = 15000;
   int poolSaturation = 30; // pool = 20 -> 100% CPU
   
-  boolean showResourceUsageImpact = true;
+  boolean showResourceUsageImpact = false;
   int cpuImpactCoef=10;
   int cpuQueueImpactCoef=100;
   int memoryGCThreshold=1000000;
