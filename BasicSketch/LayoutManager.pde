@@ -1,3 +1,5 @@
+import org.uncommons.maths.random.GaussianGenerator;
+
 class LayoutManager { 
   float clientSideRad = 20;
   int clientSideTopMargin = 80;
@@ -14,6 +16,7 @@ class LayoutManager {
   int serverPoolLeftMargin = serverBoxLeftMargin + 3;
   int serverPoolTopMargin = serverBoxTopMargin + 70;
   int serverPoolMaxRows = 10;
+  GaussianGenerator rng = new GaussianGenerator(3, 2, new Random());
   
     void displayServerBox() {
           pushMatrix();
