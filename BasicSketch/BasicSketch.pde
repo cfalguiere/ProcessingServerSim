@@ -25,6 +25,10 @@ void setup() {
  
 void draw() {
   background(255);
+  
+  if (monitor.usedMemory>optionsManager.memoryGCThreshold && optionsManager.showResourceUsageImpact) {
+    scheduler.scheduleGC();
+  }
  
   layoutManager.displayServerBox();
   

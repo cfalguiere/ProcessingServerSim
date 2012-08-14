@@ -9,6 +9,7 @@ class Monitor {
     int cpuUsage;
     int cpuQueue;
     int usedMemory;
+    int gcPauses;
     DecimalFormat formatter;
     
     Monitor() {
@@ -61,6 +62,7 @@ class Monitor {
           text("CPU Usage", 0, 10);
           text("CPU Queue", 0, 50);
           text("Memory", 0, 90);
+          text("GC Pauses ", 0, 130);
           // bars
           fill(255*cpuUsage/100,255*(100-cpuUsage)/100,128);
           noStroke();
@@ -71,11 +73,12 @@ class Monitor {
           // text memory
           fill(0);
           textFont(f,18);
-
           text(formatter.format(usedMemory), 0, 110);
+          text(formatter.format(gcPauses), 0, 150);
           popMatrix();
     }
     
+    void incGcPause(int duration) {gcPauses+=duration;}
     void incPoolBusyCount() {poolBusy++;}
     void decPoolBusyCount() {poolBusy--;}
     void incConversationStartedCount() {conversationStartedCount++;}
@@ -87,4 +90,11 @@ class Monitor {
     void decPendingRequestsCount() {pendingRequestsCount--;}
     void reportResponseTime(int duration) {cumResponseTime+=duration;}
 
+    void mimicGarbage() {
+      usedMemory = poolBusy*optionsManager.memoryPerRequest;
+      if (usedMemory>2000000) {
+          println("warning usedMemory " + usedMemory);
+      }
+    }
+    
 }

@@ -11,5 +11,8 @@ class OptionsManager {
 
   int memoryPerRequest = 10000;
   int poolSaturation = 20; // pool = 20 -> 100% CPU
-  //boolean showResourceUsage = true;
+  int memoryGCThreshold=1000000;
+  int gcDuration=10;
+  
+  boolean showResourceUsageImpact = true;
 }

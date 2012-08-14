@@ -5,6 +5,8 @@ class Scheduler {
     int eventCounter = 0;
     GaussianGenerator responseTimeRNG;
     GaussianGenerator thinkTimeRNG;
+    long gcUntilMs = 0;
+    boolean inGc = false;
   
     Scheduler() {
       responseTimeRNG = new GaussianGenerator(optionsManager.responseTimeMean, optionsManager.responseTimeSD, new Random());
@@ -45,7 +47,24 @@ class Scheduler {
         }
     }
  
+    void scheduleGC() {
+        if (!inGc) {
+            inGc = true;
+            gcUntilMs = millis() + optionsManager.gcDuration;
+        }
+    }
+  
     void manageEventLoop() {
+       if (inGc) {
+         if (gcUntilMs<=millis()) {
+              inGc = false;
+              monitor.mimicGarbage();
+              monitor.incGcPause(optionsManager.gcDuration);
+         }
+         return;
+       }
+         
+       
        if (schedulerEvents.size()>0) {
             Event next = (Event)schedulerEvents.first();
             //println("millis " + millis() + " got event at " + next.startMs ); 
