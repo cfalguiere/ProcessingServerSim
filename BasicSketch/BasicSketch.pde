@@ -2,6 +2,7 @@
 import java.util.TreeSet;
 
 LayoutManager layoutManager = new LayoutManager();
+OptionsManager optionsManager = new OptionsManager();
 List<Conversation> conversations;
 static int conversationCounter = 0;
 TreeSet<Event> scheduler;
@@ -65,7 +66,7 @@ void manageEventLoop() {
 
 void initializeLoad() {
   conversations = new ArrayList<Conversation>();
-  for (int i=0; i<5; i++) {
+  for (int i=0; i<optionsManager.maxConversations; i++) {
     conversations.add(new Conversation());
   }
   scheduler = new TreeSet();

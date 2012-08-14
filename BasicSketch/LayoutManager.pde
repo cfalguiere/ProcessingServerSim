@@ -1,8 +1,9 @@
 class LayoutManager { 
   float clientSideRad = 20;
-  int clientSideTopMargin = 35;
+  int clientSideTopMargin = 50;
   int clientSideLeftMargin = 10;
   int clientSideVertSpacer = 2;
+  int clientSideMaxRows = 15;
   
   int serverBoxTopMargin = 30;
   int serverBoxLeftMargin = 300;
