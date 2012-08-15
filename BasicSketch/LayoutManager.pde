@@ -10,7 +10,7 @@ class LayoutManager {
   int serverBoxTopMargin = 30;
   int serverBoxLeftMargin = 275;
   int serverBoxHeight = 400 - serverBoxTopMargin*2;
-  int serverBoxWidth = 150;
+  int serverBoxWidth = 140;
   int serverBoxVertSpacer = 2;
   
   int serverBacklogLeftMargin = serverBoxLeftMargin + 3;
@@ -20,6 +20,7 @@ class LayoutManager {
   
   int serverPoolLeftMargin = serverBoxLeftMargin + 3;
   int serverPoolTopMargin = serverBacklogTopMargin + serverBacklogHeight + 50;
+  int serverPoolWidth = serverBoxWidth - 6;
   
   int transferAnimationDuration = 300;
   

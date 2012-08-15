@@ -5,7 +5,7 @@ class OptionsManager {
   int rampupS = 5;
 
   int clientSideMaxRows = 12;
-  int serverPoolMaxRows = 10;
+  //int serverPoolMaxRows = 10;
   
   int responseTimeMean = 2000;
   float responseTimeSD = 500;
@@ -54,18 +54,18 @@ class OptionsManager {
   void configureLimitedPoolAndBacklog() {
     useMaxPoolSize = true;
     maxPoolSize = 20;
-    serverPoolMaxRows = 5;
+    //serverPoolMaxRows = 5;
   }
   
   
   void configureDebug() {
     maxConversations = 50;
     clientSideMaxRows = 10;
-    serverPoolMaxRows = 5;
+    //serverPoolMaxRows = 5;
     responseTimeMean = 5000;
     thinkTimeMean = 5000;
     useMaxPoolSize = true;
-    maxPoolSize = 1;
+    maxPoolSize = 50;
   }
 }
 
