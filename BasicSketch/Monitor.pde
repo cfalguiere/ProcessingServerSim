@@ -62,7 +62,7 @@ class Monitor {
           popMatrix();
     }
 
-    void  displayResourceUsage() {
+    void  displayResourceUsage() { // TODO refactor
         
         cpuUsage = constrain(poolBusy*(100/optionsManager.poolSaturation), 0, 100);
         cpuQueue = constrain(poolBusy - optionsManager.poolSaturation, 0, 10000);
