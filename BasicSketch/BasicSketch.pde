@@ -48,7 +48,9 @@ void draw() {
   monitor.displayServerPoolStats();
   monitor.displayBacklogStatus();
   monitor.displayRequestsStats();
-  monitor.displayResourceUsage();
+  if (optionsManager.showResourceUsage) {
+      monitor.displayResourceUsage();
+  }
 }
 
 
