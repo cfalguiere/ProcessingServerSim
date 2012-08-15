@@ -34,7 +34,7 @@ class OptionsManager {
   }
   
   void configureResourceUsage() {
-      showResourceUsage = false;
+      showResourceUsage = true;
       memoryPerRequest = 15000;
       poolSaturation = 25; // pool = 25 -> 100% CPU
   }
