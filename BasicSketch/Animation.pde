@@ -31,7 +31,7 @@ class Animation {
                 xTranslate = layoutManager.serverPoolLeftMargin - layoutManager.clientSideRadMoving;
                 wTranslate = layoutManager.clientSideLeftMargin - xTranslate;
                 yTranslate = yPosServer; 
-                hTranslate = (layoutManager.clientSideTopMargin + pConversation.ypos) - yTranslate; // TODO test en backlog
+                hTranslate = (layoutManager.clientSideTopMargin + pConversation.ypos) - yTranslate; 
                 logger.debug("Animation", "REC xTranslate " + xTranslate  + " wTranslate ");
                 logger.debug("Animation", "REC frameRate " + frameRate  
                       + " layoutManager.transferAnimationDuration " + layoutManager.transferAnimationDuration 
@@ -44,7 +44,7 @@ class Animation {
         switch (animation) {
             case SENDING:
                 xTranslate = constrain(xTranslate + (wTranslate/nbFrames), conversation.xpos, layoutManager.serverPoolLeftMargin - layoutManager.clientSideRadMoving );
-                yTranslate = constrain(yTranslate + (hTranslate/nbFrames), conversation.ypos, yPosServer); //TODO actual position
+                yTranslate = constrain(yTranslate + (hTranslate/nbFrames), conversation.ypos, yPosServer); 
                 logger.debug("Animation", "SND xpos " + conversation.xpos +" xTranslate " + xTranslate + " xPosServer " + layoutManager.serverPoolLeftMargin 
                       + " wTranslate " + wTranslate);
                 logger.debug("Animation", "SND ypos " + conversation.ypos +" yTranslate " + yTranslate + " yPosServer " + yPosServer);
@@ -62,9 +62,7 @@ class Animation {
     void displayReceiving() { // TODO ne pas appeler directement
         switch (animation) {
             case RECEIVING:
-                //xTranslate = constrain(xTranslate + (wTranslate/nbFrames), conversation.xpos, layoutManager.serverPoolLeftMargin);
                 xTranslate = constrain(xTranslate + (wTranslate/nbFrames), conversation.xpos, layoutManager.serverPoolLeftMargin);
-                //yTranslate = constrain(yTranslate + (hTranslate/nbFrames), conversation.ypos, yPosServer); //TODO actual position
                 yTranslate = constrain(yTranslate + (hTranslate/nbFrames),  conversation.ypos, yPosServer); //TODO actual position
                 logger.debug("Animation", "REC xpos " + conversation.xpos +" xTranslate " + xTranslate + " xPosServer " + layoutManager.serverPoolLeftMargin 
                       + " wTranslate " + wTranslate);

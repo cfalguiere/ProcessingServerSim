@@ -98,49 +98,4 @@ class Conversation {
       popMatrix();
   }
   
-  /*
-  void displayTranslationAfter() {
-      switch (currentState) {
-        case SENDING:
-          float nbFrames = layoutManager.transferAnimationDuration / frameRate;
-          xTranslate = xTranslate + 10;
-          float yPosServer = layoutManager.serverPoolTopMargin + server.getYPos(posInPool);
-          yTranslate = yTranslate + (yPosServer-ypos)/30; //TODO enlever l'approximation
-          logger.debug("Conversation", "ypos " + ypos +" yTranslate " + yTranslate + " yPosServer " + yPosServer);
-          if (yTranslate>yPosServer) yTranslate=yPosServer; // TODO constrain
-          if (xTranslate<layoutManager.serverPoolLeftMargin) {
-            pushMatrix();
-            translate(xTranslate, yTranslate);
-            fill(fillColor);
-            ellipse(0, 0, layoutManager.clientSideRadMoving, layoutManager.clientSideRadMoving); //TODO parameter
-            popMatrix();
-          } 
-        break;
-        default:
-        break;
-      }
-  }
-  
-  void displayTranslationBefore() {
-      switch (currentState) {
-        case RECEIVING:
-          //translate(x, height/2-w/2);
-          xTranslate = xTranslate - 10;
-          float yPosServerR = layoutManager.serverPoolTopMargin + server.getYPos(posInPool);
-          yTranslate = yTranslate - (yPosServerR-ypos)/30; //TODO enlever l'approximation
-          if (yTranslate>yPosServerR) yTranslate=ypos; // TODO constrain
-          if (xTranslate>layoutManager.clientSideLeftMargin+rad) {
-            pushMatrix();
-            translate(xTranslate, yTranslate);
-            fill(fillColor);
-            ellipse(0,0, 15, 15);
-            popMatrix();
-          } 
-        break;
-        default:
-        break;
-      }
-  }
-  */
-  
 }

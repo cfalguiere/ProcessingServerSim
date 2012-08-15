@@ -13,8 +13,13 @@ class LayoutManager {
   int serverBoxWidth = 150;
   int serverBoxVertSpacer = 2;
   
+  int serverBacklogLeftMargin = serverBoxLeftMargin + 3;
+  int serverBacklogTopMargin = serverBoxTopMargin + 30;
+  int serverBacklogWidth = serverBoxWidth - 6;
+  int serverBacklogHeight =  round(clientSideRad*2) + clientSideVertSpacer*3;
+  
   int serverPoolLeftMargin = serverBoxLeftMargin + 3;
-  int serverPoolTopMargin = serverBoxTopMargin + 70;
+  int serverPoolTopMargin = serverBacklogTopMargin + serverBacklogHeight + 50;
   
   int transferAnimationDuration = 300;
   
@@ -22,7 +27,7 @@ class LayoutManager {
   
     void displayServerBox() {
           pushMatrix();
-          translate(layoutManager.serverBoxLeftMargin,layoutManager.serverBoxTopMargin);
+          translate(serverBoxLeftMargin, serverBoxTopMargin);
           // text
           fill(0);
           textFont(f,18);
@@ -32,23 +37,29 @@ class LayoutManager {
           strokeWeight(1);  
           fill(#CBDEED);
           rectMode(CORNERS);
-          rect(0, 0, layoutManager.serverBoxWidth, layoutManager.serverBoxHeight);
-          displayServerBacklog();
+          rect(0, 0, serverBoxWidth, serverBoxHeight);
           popMatrix();
+          displayServerBacklog();
           displayServerPool();
     }
 
     void displayServerBacklog() {
       if (optionsManager.useMaxPoolSize) {
+          pushMatrix();
+          translate(serverBacklogLeftMargin, serverBacklogTopMargin);
           fill(0);
           textFont(f,14);
-          text("backlog", 3, 20);
+          text("backlog", 0, -8);
+          stroke(#ABCBE5);
+          fill(#E1E8ED);
+          rect(0, 0, serverBacklogWidth, serverBacklogHeight);
+          popMatrix();
       }
     }
 
     void displayServerPool() {
           pushMatrix();
-          translate(serverPoolLeftMargin,serverPoolTopMargin);
+          translate(serverPoolLeftMargin, serverPoolTopMargin);
           // text
           fill(0);
           textFont(f,14);

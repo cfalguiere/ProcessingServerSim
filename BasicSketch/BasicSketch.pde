@@ -39,10 +39,8 @@ void draw() {
 
   for (int i=0; i<conversations.size(); i++) {
       Conversation conversation = conversations.get(i);
-      conversation.animation.displayReceiving();
-      //conversation.displayTranslationBefore();
+      conversation.animation.displayReceiving(); // TODO switch in display
       conversation.display();
-      //conversation.displayTranslationAfter();
       conversation.animation.displaySending();
   }
   server.checkBacklog();

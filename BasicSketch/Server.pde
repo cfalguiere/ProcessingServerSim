@@ -1,6 +1,7 @@
 class Server { 
     List<Conversation> pool = new ArrayList<Conversation>();
     List<Conversation> backlog = new ArrayList<Conversation>();
+    List<PVector> backlogCoord = new ArrayList<PVector>();
     
     int incomingRequest(Conversation pConversation) {
       int pos = -1;
@@ -53,27 +54,57 @@ class Server {
     }
     
     void display() {
-      for (int i=0; i<pool.size(); i++) {
-        //logger.debug("Server", "displaying entry at position " + i);
-        Conversation entry = pool.get(i);
-        if (entry != null) {
-          if (entry.currentState==State.StateValue.WAITING || entry.currentState==State.StateValue.DOING) {
-            // wait until the translation is done
+        displayPool();
+        displayBacklog();
+    }
+    
+    void displayBacklog() {
+        for (int i=0; i<backlog.size(); i++) {
+            Conversation entry = backlog.get(i);
             stroke(128,128,128,128);
             strokeWeight(1);  
             color fillColor = entry.fillColor;
             fill(fillColor, 255);
             rectMode(CENTER);
             pushMatrix();
-            translate(layoutManager.serverPoolLeftMargin,layoutManager.serverPoolTopMargin);
+            translate(layoutManager.serverBacklogLeftMargin,layoutManager.serverBacklogTopMargin);
             float rad = layoutManager.clientSideRad;
-            float xpos = getXPos(i);
-            float ypos = getYPos(i);
-            ellipse(xpos, ypos, rad, rad);
+            PVector coord = (i<backlogCoord.size()?backlogCoord.get(i):null);
+            if (coord == null) {
+              int n = round(layoutManager.serverBacklogWidth /  (rad/2)) - 1;
+              float x = (i%n)*(rad/2) + rad/2 + layoutManager.rng.nextValue().intValue();
+              int rows = (i/n)%3;
+              float y = rows*(rad/2) + rad/2 + layoutManager.rng.nextValue().intValue();
+              coord = new PVector(x, y);
+              backlogCoord.add(coord);
+            }
+            ellipse(coord.x, coord.y, rad, rad);
             popMatrix();
-          }
         }
-      }
+    }
+      
+    void displayPool() {
+        for (int i=0; i<pool.size(); i++) {
+            //logger.debug("Server", "displaying entry at position " + i);
+            Conversation entry = pool.get(i);
+            if (entry != null) {
+                if (entry.currentState==State.StateValue.DOING) { /*entry.currentState==State.StateValue.WAITING || */
+                    // wait until the translation is done
+                    stroke(128,128,128,128);
+                    strokeWeight(1);  
+                    color fillColor = entry.fillColor;
+                    fill(fillColor, 255);
+                    rectMode(CENTER);
+                    pushMatrix();
+                    translate(layoutManager.serverPoolLeftMargin,layoutManager.serverPoolTopMargin);
+                    float rad = layoutManager.clientSideRad;
+                    float xpos = getXPos(i);
+                    float ypos = getYPos(i);
+                    ellipse(xpos, ypos, rad, rad);
+                    popMatrix();
+                }
+            }
+        }
     }
     
     float getXPos(int posInPool) {

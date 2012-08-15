@@ -35,11 +35,11 @@ class Monitor {
     void displayBacklogStatus() {
       if (optionsManager.useMaxPoolSize) {
           pushMatrix();
-          translate(layoutManager.serverBoxLeftMargin,layoutManager.serverBoxTopMargin);
+          translate(layoutManager.serverBacklogLeftMargin,layoutManager.serverBacklogTopMargin);
           fill(0);
           textFont(f,16);
           String value = String.format("%02d", server.backlog.size());
-          text(value, 60, 22);
+          text(value, layoutManager.serverBacklogWidth - 25, -5);
           popMatrix();
       }
     }
