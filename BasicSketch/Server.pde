@@ -78,13 +78,13 @@ class Server {
     
     float getXPos(int posInPool) {
           float rad = layoutManager.clientSideRad;
-          int col = posInPool / layoutManager.serverPoolMaxRows;
+          int col = posInPool / optionsManager.serverPoolMaxRows;
           return col*(rad+layoutManager.serverBoxVertSpacer) + rad/2;
     }
     
     float getYPos(int posInPool) {
           float rad = layoutManager.clientSideRad;
-          int row = posInPool % layoutManager.serverPoolMaxRows;
+          int row = posInPool % optionsManager.serverPoolMaxRows;
           return row*(rad+layoutManager.serverBoxVertSpacer) + rad/2;
     }
 //TODO vector

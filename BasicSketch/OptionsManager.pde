@@ -3,6 +3,8 @@ class OptionsManager {
   int startDelayMs = 1000;
   // nb new conversations per seconds
   int rampupS = 5;
+
+  int serverPoolMaxRows = 10;
   
   int responseTimeMean = 2000;
   float responseTimeSD = 500;
@@ -23,7 +25,7 @@ class OptionsManager {
   int maxPoolSize;
   
   OptionsManager() {
-        configureResourceUsage();
+       //configureResourceUsage();
        configureResourceUsageImpact();
        configureVariableThinktime();
        configureLimitedPoolAndBacklog();
@@ -50,6 +52,7 @@ class OptionsManager {
   void configureLimitedPoolAndBacklog() {
     useMaxPoolSize = true;
     maxPoolSize = 20;
+    serverPoolMaxRows = 5;
   }
   
   
