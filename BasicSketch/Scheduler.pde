@@ -30,11 +30,11 @@ class Scheduler {
     }
     
     void scheduleSending(Conversation conversation) {
-        schedulerEvents.add(new Event(millis()+300, conversation, State.StateValue.WAITING));
+        schedulerEvents.add(new Event(millis()+layoutManager.transferAnimationDuration, conversation, State.StateValue.WAITING));
     }
     
     void scheduleDoing(Conversation conversation) {
-        schedulerEvents.add(new Event(millis()+300, conversation, State.StateValue.DOING));
+        schedulerEvents.add(new Event(millis()+layoutManager.transferAnimationDuration, conversation, State.StateValue.DOING));
     }
     
     void scheduleResponse(Conversation conversation) {

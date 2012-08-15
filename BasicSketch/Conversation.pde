@@ -5,10 +5,9 @@ class Conversation {
   float rad = layoutManager.clientSideRad;
   State.StateValue currentState;
   color fillColor = color(random(150)+100,random(150)+50, random(150)+50);
-  float xTranslate;
-  float yTranslate;
   int posInPool;
   int currentResponseTime;
+  Animation animation;
   
   Conversation() {
     id = conversationCounter++;
@@ -17,6 +16,7 @@ class Conversation {
     float col = id / optionsManager.clientSideMaxRows / 2.0f;
     xpos = col*(rad+layoutManager.clientSideVertSpacer) + rad/2 + layoutManager.rng.nextValue().intValue();
     ypos = row*(rad+layoutManager.clientSideVertSpacer) + rad/2 + layoutManager.rng.nextValue().intValue();
+    animation = new Animation(this, State.AnimationValue.NONE);
   }
   
   void changeState(State.StateValue pState) {
@@ -27,13 +27,12 @@ class Conversation {
         monitor.incConversationStartedCount();
         break;
       case SENDING:
-        scheduler.scheduleSending(this);
+        scheduler.scheduleSending(this); // TODO enlever et simplifier les constructeurs
+        animation = new Animation(this, State.AnimationValue.SENDING);
         break;
       case WAITING:
         posInPool = server.incomingRequest(this);
         monitor.incPendingRequestsCount();
-        xTranslate = layoutManager.clientSideLeftMargin + xpos;
-        yTranslate = layoutManager.clientSideTopMargin + ypos;
         break;
       case DOING:
         scheduler.scheduleResponse(this);
@@ -41,8 +40,7 @@ class Conversation {
       case RECEIVING:
         scheduler.scheduleReceiving(this);
         posInPool = server.terminatingRequest(this);
-        xTranslate = layoutManager.serverPoolLeftMargin;
-        yTranslate = layoutManager.serverPoolTopMargin + server.getYPos(posInPool);
+        animation = new Animation(this, State.AnimationValue.RECEIVING);
         monitor.decPendingRequestsCount();
         monitor.incTotalRequestsCount();
         break;
@@ -100,18 +98,21 @@ class Conversation {
       popMatrix();
   }
   
+  /*
   void displayTranslationAfter() {
       switch (currentState) {
         case SENDING:
+          float nbFrames = layoutManager.transferAnimationDuration / frameRate;
           xTranslate = xTranslate + 10;
           float yPosServer = layoutManager.serverPoolTopMargin + server.getYPos(posInPool);
           yTranslate = yTranslate + (yPosServer-ypos)/30; //TODO enlever l'approximation
+          logger.debug("Conversation", "ypos " + ypos +" yTranslate " + yTranslate + " yPosServer " + yPosServer);
           if (yTranslate>yPosServer) yTranslate=yPosServer; // TODO constrain
           if (xTranslate<layoutManager.serverPoolLeftMargin) {
             pushMatrix();
             translate(xTranslate, yTranslate);
             fill(fillColor);
-            ellipse(0, 0, 15, 15); //TODO parameter
+            ellipse(0, 0, layoutManager.clientSideRadMoving, layoutManager.clientSideRadMoving); //TODO parameter
             popMatrix();
           } 
         break;
@@ -140,5 +141,6 @@ class Conversation {
         break;
       }
   }
+  */
   
 }

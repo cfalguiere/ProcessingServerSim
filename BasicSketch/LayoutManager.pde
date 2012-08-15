@@ -2,6 +2,7 @@ import org.uncommons.maths.random.GaussianGenerator;
 
 class LayoutManager { 
   float clientSideRad = 20;
+  float clientSideRadMoving = 15;
   int clientSideTopMargin = 80;
   int clientSideLeftMargin = 10;
   int clientSideVertSpacer = 2;
@@ -14,6 +15,8 @@ class LayoutManager {
   
   int serverPoolLeftMargin = serverBoxLeftMargin + 3;
   int serverPoolTopMargin = serverBoxTopMargin + 70;
+  
+  int transferAnimationDuration = 300;
   
   GaussianGenerator rng = new GaussianGenerator(3, 2, new Random());
   

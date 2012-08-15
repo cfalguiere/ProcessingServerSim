@@ -57,7 +57,7 @@ class Server {
         //logger.debug("Server", "displaying entry at position " + i);
         Conversation entry = pool.get(i);
         if (entry != null) {
-          if (entry.currentState==State.StateValue.WAITING) {
+          if (entry.currentState==State.StateValue.WAITING || entry.currentState==State.StateValue.DOING) {
             // wait until the translation is done
             stroke(128,128,128,128);
             strokeWeight(1);  

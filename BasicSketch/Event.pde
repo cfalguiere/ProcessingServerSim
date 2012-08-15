@@ -4,18 +4,18 @@ class Event implements Comparable<Event> {
   Conversation conversation;
   State.StateValue nextState;
   
-  Event(long tempStartMs, Conversation tempConversation) {
+  Event(long pStartMs, Conversation  pConversation) {
     id = scheduler.eventCounter++;
-    startMs = tempStartMs;
-    conversation = tempConversation;
+    startMs = pStartMs;
+    conversation = pConversation;
     nextState = State.StateValue.STARTED;
   }
   
-  Event(long tempStartMs, Conversation tempConversation, State.StateValue tempNextState) {
+  Event(long  pStartMs, Conversation  pConversation, State.StateValue  pNextState) {
     id = scheduler.eventCounter++;
-    startMs = tempStartMs;
-    conversation = tempConversation;
-    nextState = tempNextState;
+    startMs =  pStartMs;
+    conversation = pConversation;
+    nextState = pNextState;
   }
   
   public int compareTo(Event o) {
@@ -26,3 +26,5 @@ class Event implements Comparable<Event> {
     return diff;
   }
 }
+
+

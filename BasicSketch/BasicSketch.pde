@@ -38,9 +38,12 @@ void draw() {
   scheduler.manageEventLoop();
 
   for (int i=0; i<conversations.size(); i++) {
-    conversations.get(i).displayTranslationBefore();
-    conversations.get(i).display();
-    conversations.get(i).displayTranslationAfter();
+      Conversation conversation = conversations.get(i);
+      conversation.animation.displayReceiving();
+      //conversation.displayTranslationBefore();
+      conversation.display();
+      //conversation.displayTranslationAfter();
+      conversation.animation.displaySending();
   }
   server.checkBacklog();
   
