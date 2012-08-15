@@ -13,8 +13,8 @@ class Conversation {
   Conversation() {
     id = conversationCounter++;
     currentState = State.StateValue.INITIALIZED;
-    int row = id % layoutManager.clientSideMaxRows;
-    float col = id / layoutManager.clientSideMaxRows / 2.0f;
+    int row = id % optionsManager.clientSideMaxRows;
+    float col = id / optionsManager.clientSideMaxRows / 2.0f;
     xpos = col*(rad+layoutManager.clientSideVertSpacer) + rad/2 + layoutManager.rng.nextValue().intValue();
     ypos = row*(rad+layoutManager.clientSideVertSpacer) + rad/2 + layoutManager.rng.nextValue().intValue();
   }

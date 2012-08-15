@@ -4,6 +4,7 @@ class OptionsManager {
   // nb new conversations per seconds
   int rampupS = 5;
 
+  int clientSideMaxRows = 12;
   int serverPoolMaxRows = 10;
   
   int responseTimeMean = 2000;
@@ -25,10 +26,11 @@ class OptionsManager {
   int maxPoolSize;
   
   OptionsManager() {
-       //configureResourceUsage();
+       configureResourceUsage();
        configureResourceUsageImpact();
        configureVariableThinktime();
        configureLimitedPoolAndBacklog();
+       //configureDebug();
   }
   
   void configureResourceUsage() {
@@ -58,8 +60,10 @@ class OptionsManager {
   
   void configureDebug() {
     maxConversations = 2;
-    useMaxPoolSize = true;
-    maxPoolSize = 1;
+    clientSideMaxRows = 1;
+    serverPoolMaxRows = 1;
+    //useMaxPoolSize = true;
+    //maxPoolSize = 1;
   }
 }
 
