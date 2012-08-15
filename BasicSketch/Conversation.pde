@@ -93,7 +93,7 @@ class Conversation {
           logger.error("Conversation", "received unknown state " + currentState);
       }
       
-      rectMode(CENTER);
+      ellipseMode(CENTER);
       ellipse(xpos, ypos, rad, rad);
       popMatrix();
   }

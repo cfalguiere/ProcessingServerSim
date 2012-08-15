@@ -71,25 +71,40 @@ class Monitor {
           // text
           fill(0);
           textFont(f,14);
-          text("CPU Usage", 0, 10);
-          text("CPU Queue", 0, 50);
           text("Memory", 0, 95);
           text("GC Pauses ", 0, 135);
-          // bars
-          fill(255*cpuUsage/100,255*(100-cpuUsage)/100,128);
-          noStroke();
-          rectMode(CORNERS);
-          rect(0, 15, cpuUsage, 35);
-          fill(64,64,64);
-          rect(0, 55, cpuQueue, 75);
           // text memory
           fill(0);
-          textFont(f,16);
-          text(String.format("%02d%%",cpuUsage), cpuUsage + 5, 30);
-          text(String.format("%02d",cpuQueue), cpuQueue + 5, 70);
           textFont(f,18);
           text(formatter.format(usedMemory), 0, 115);
           text(formatter.format(gcPauses), 0, 155);
+          
+          pushMatrix();
+          translate(0, 200);
+          // gauge
+          noStroke();
+          fill(255*cpuUsage/100,255*(100-cpuUsage)/100,96);
+          ellipseMode(CORNERS);
+          float gaugeDiameter = 80;
+          arc(0, 0, gaugeDiameter, gaugeDiameter, PI, PI*cpuUsage/100+PI); 
+          if (cpuUsage>0){
+              textFont(f,16);
+              text(String.format("%02d%%",cpuUsage), gaugeDiameter/2-15, gaugeDiameter/2+15);
+          }
+          if (cpuQueue>0){
+              // vert bar
+              noStroke();
+              rectMode(CORNERS);
+              fill(64,64,64);
+              rect(gaugeDiameter + 20, gaugeDiameter/2, gaugeDiameter + 20 + 20, gaugeDiameter/2 - cpuQueue);
+              // vert bar text
+              textFont(f,16);
+              text(String.format("%02d",cpuQueue), gaugeDiameter + 20, gaugeDiameter/2 - cpuQueue - 5);
+              textFont(f,12);
+              text("Queue", gaugeDiameter + 20, gaugeDiameter/2 + 13);
+          }
+          popMatrix();
+
           popMatrix();
     }
     
