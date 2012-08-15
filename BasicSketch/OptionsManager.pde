@@ -1,6 +1,5 @@
 class OptionsManager { 
   int maxConversations = 100;
-  //int maxConversations = 2;
   int startDelayMs = 1000;
   // nb new conversations per seconds
   int rampupS = 5;
@@ -8,19 +7,56 @@ class OptionsManager {
   int responseTimeMean = 2000;
   float responseTimeSD = 500;
   int thinkTimeMean = 5000;
-  //float thinkTimeSD = 500;
-  float thinkTimeSD = 4500;
+  float thinkTimeSD = 0;
 
-  int memoryPerRequest = 15000;
-  int poolSaturation = 25; // pool = 20 -> 100% CPU
+  boolean showResourceUsage = false;
+  int memoryPerRequest;
+  int poolSaturation;
   
-  boolean showResourceUsageImpact = true;
-  int cpuImpactCoef=10;
-  int cpuQueueImpactCoef=100;
-  int memoryGCThreshold=1000000;
-  int gcDuration=20;
+  boolean showResourceUsageImpact = false;
+  int cpuImpactCoef;
+  int cpuQueueImpactCoef;
+  int memoryGCThreshold;
+  int gcDuration;
   
-  boolean useMaxPoolSize = true;
-  int maxPoolSize = 20;
-  //int maxPoolSize = 1;
+  boolean useMaxPoolSize = false;
+  int maxPoolSize;
+  
+  OptionsManager() {
+        configureResourceUsage();
+       configureResourceUsageImpact();
+       configureVariableThinktime();
+       configureLimitedPoolAndBacklog();
+  }
+  
+  void configureResourceUsage() {
+      showResourceUsage = false;
+      memoryPerRequest = 15000;
+      poolSaturation = 25; // pool = 25 -> 100% CPU
+  }
+  
+  void configureResourceUsageImpact() {
+    showResourceUsageImpact = true;
+    cpuImpactCoef = 10;
+    cpuQueueImpactCoef = 100;
+    memoryGCThreshold = 1000000;
+    gcDuration = 20;
+  }
+  
+  void configureVariableThinktime() {
+      thinkTimeSD = 4500;
+  }
+  
+  void configureLimitedPoolAndBacklog() {
+    useMaxPoolSize = true;
+    maxPoolSize = 20;
+  }
+  
+  
+  void configureDebug() {
+    maxConversations = 2;
+    useMaxPoolSize = true;
+    maxPoolSize = 1;
+  }
 }
+
