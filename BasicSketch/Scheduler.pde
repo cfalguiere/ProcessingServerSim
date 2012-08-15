@@ -39,7 +39,7 @@ class Scheduler {
     
     void scheduleResponse(Conversation conversation) {
         conversation.currentResponseTime = scheduler.getResponseTimeRandom();
-        println(conversation.id + " Waiting " +  conversation.currentResponseTime);
+        logger.debug("Scheduler", conversation.id + " Waiting " +  conversation.currentResponseTime);
         schedulerEvents.add(new Event(millis()+ conversation.currentResponseTime, conversation, State.StateValue.RECEIVING));
         monitor.reportResponseTime( conversation.currentResponseTime);
     }
@@ -75,9 +75,8 @@ class Scheduler {
        
        if (schedulerEvents.size()>0) {
             Event next = (Event)schedulerEvents.first();
-            //println("millis " + millis() + " got event at " + next.startMs ); 
             while (next!=null && next.startMs<=millis()) {
-                println("frame " + frameCount + " millis " + millis() 
+                logger.debug("Scheduler", "frame " + frameCount + " millis " + millis() 
                   + " handling event for conversation " + next.conversation.id + " " + next.nextState); 
                 next.conversation.changeState(next.nextState);
                 schedulerEvents.remove(next);

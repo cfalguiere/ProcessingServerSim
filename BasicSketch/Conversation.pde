@@ -92,7 +92,7 @@ class Conversation {
           fill(fillColor, 255);
           break;
         default:
-          println("received unknown state " + currentState);
+          logger.error("Conversation", "received unknown state " + currentState);
       }
       
       rectMode(CENTER);

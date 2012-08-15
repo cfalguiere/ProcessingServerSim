@@ -108,7 +108,7 @@ class Monitor {
     void mimicGarbage() {
       usedMemory = poolBusy*optionsManager.memoryPerRequest;
       if (usedMemory>2000000) {
-          println("warning usedMemory " + usedMemory);
+          logger.info("Monitor", "warning usedMemory " + usedMemory);
       }
     }
     

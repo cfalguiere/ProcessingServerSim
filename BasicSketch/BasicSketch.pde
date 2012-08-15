@@ -8,6 +8,7 @@ List<Conversation> conversations;
 static int conversationCounter = 0;
 Server server = new Server();
 Monitor monitor = new Monitor();
+Logger logger = new Logger();
 int frameCount;
 PFont f;
 boolean stopping = false;

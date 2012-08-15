@@ -26,7 +26,7 @@ class Server {
           pos = pool.size()-1;
         }
       }  
-      println("SERVER incoming request for conversation " 
+      logger.debug("Server", "incoming request for conversation " 
         + pConversation.id + " at position " + pos);
       return pos;
     }
@@ -35,7 +35,7 @@ class Server {
       //TODO c'est pas au client de faire ça
       int pos = pool.indexOf(pConversation);
       pool.set(pos, null);
-      println("SERVER terminating request for conversation " 
+      logger.debug("Server", "terminating request for conversation " 
         + pConversation.id + " at position " + pos);
       monitor.decPoolBusyCount();
       return pos;
@@ -46,7 +46,7 @@ class Server {
       while (monitor.poolBusy<pool.size() && backlog.size()>0) {
         Conversation conversation = backlog.get(0);
         int pos = incomingRequest(conversation);
-        println("SERVER moving conversation " 
+        logger.debug("Server", "moving conversation " 
         + conversation.id + " from backlog to pool at position " + pos);
         backlog.remove(conversation);
       }
@@ -54,7 +54,7 @@ class Server {
     
     void display() {
       for (int i=0; i<pool.size(); i++) {
-        //println("SERVER displaying entry at position " + i);
+        //logger.debug("Server", "displaying entry at position " + i);
         Conversation entry = pool.get(i);
         if (entry != null) {
           if (entry.currentState==State.StateValue.WAITING) {
