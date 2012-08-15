@@ -25,9 +25,9 @@ class Monitor {
           // text
           fill(0);
           textFont(f,14);
-          text("size " + "busy", 0, 0);
+          text((optionsManager.useMaxPoolSize?"size " + "busy":"size"), 0, 0);
           textFont(f,22);
-          String values = String.format("%02d %02d", server.pool.size(), poolBusy);
+          String values = (optionsManager.useMaxPoolSize?String.format("%02d %02d", server.pool.size(), poolBusy):String.format("%02d", server.pool.size()));
           text(values, 0, 20);
           popMatrix();
     }

@@ -64,7 +64,7 @@ class OptionsManager {
     //serverPoolMaxRows = 5;
     responseTimeMean = 5000;
     thinkTimeMean = 5000;
-    useMaxPoolSize = true;
+    useMaxPoolSize = false;
     maxPoolSize = 50;
   }
 }
