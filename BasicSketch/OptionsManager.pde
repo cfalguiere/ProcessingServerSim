@@ -16,6 +16,7 @@ class OptionsManager {
   boolean showResourceUsage = false;
   int startupMemory;
   int memoryPerRequest;
+  int memoryPerSession;
   int poolSaturation;
   
   boolean showResourceUsageImpact = false;
@@ -46,7 +47,8 @@ class OptionsManager {
   void configureResourceUsage() {
       showResourceUsage = true;
       startupMemory = 500000000; // 500Mo
-      memoryPerRequest = 5000000; // 5Mo
+      memoryPerRequest = 2000000; // 2Mo
+      memoryPerSession = 5000000; // 5Mo
       poolSaturation = 25; // pool = 25 -> 100% CPU
   }
   

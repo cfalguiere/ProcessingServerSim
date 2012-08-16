@@ -88,7 +88,7 @@ class Monitor {
     void  displayResourceUsage() { // TODO refactor
         
         cpuUsage = constrain(poolBusy*(100/optionsManager.poolSaturation), 0, 100);
-        cpuQueue = constrain(poolBusy - optionsManager.poolSaturation, 0, 10000);
+        cpuQueue = constrain(poolBusy - optionsManager.poolSaturation, 0, 1000);
         
         // requests
         pushMatrix();
@@ -161,7 +161,10 @@ class Monitor {
     void incGcPause(int duration) {gcPauses+=duration;}
     void incPoolBusyCount() {poolBusy++;}
     void decPoolBusyCount() {poolBusy--;}
-    void incConversationStartedCount() {conversationStartedCount++;}
+    void incConversationStartedCount() {
+        conversationStartedCount++;
+        usedMemory += optionsManager.memoryPerSession;
+    }
     void decConversationStartedCount() {conversationStartedCount--;}
     
     void incTotalRequestsCount() {
@@ -192,7 +195,7 @@ class Monitor {
     }
 
     void mimicGarbage() {
-      usedMemory = optionsManager.startupMemory + poolBusy*optionsManager.memoryPerRequest;
+      usedMemory = optionsManager.startupMemory + poolBusy*optionsManager.memoryPerRequest + conversationStartedCount*optionsManager.memoryPerSession;
       if (usedMemory>2000000) {
           logger.info("Monitor", "warning usedMemory " + usedMemory);
       }
