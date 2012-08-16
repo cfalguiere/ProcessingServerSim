@@ -6,7 +6,7 @@ class Logger {
     }
 
     void debug(String sender, String message) {
-      if (sender.equals("")){
+      if (sender.equals("Plotter")){
           log("D", sender, message);    
       }
     }

@@ -4,19 +4,19 @@ class Monitor {
     int conversationStartedCount = 0;
     int totalRequestsCount = 0;
     int pendingRequestsCount = 0;
-    long cumResponseTime = 0;
     int poolBusy = 0;
     int cpuUsage;
     int cpuQueue;
-    int usedMemory = optionsManager.startupMemory;
     int gcPauses;
     DecimalFormat formatter;
     DecimalFormat sparklineFormatter;
     List<Long> responseTimes = new ArrayList<Long>();
     List<Long> memorySize = new ArrayList<Long>();
-    int avgResponseTime = 0;
-    int maxResponseTime = 0;
-    int maxMemorySize = optionsManager.startupMemory;
+    long cumResponseTime = 0;
+    long avgResponseTime = 0;
+    long maxResponseTime = 0;
+    long usedMemory = optionsManager.startupMemory;
+    long maxMemorySize = optionsManager.startupMemory;
     int timeoutCount = 0;
     
     Monitor() {
@@ -71,7 +71,7 @@ class Monitor {
           text(values, 0, 20);
           
           if (optionsManager.useTimeouts) {
-              translate(100,0);
+              translate(110,0);
               float errorRate = (totalRequestsCount>0?timeoutCount*100/totalRequestsCount:0);
               fill(255*errorRate/100,0,0);
               textFont(f,14);
@@ -173,7 +173,7 @@ class Monitor {
     void reportResponseBegin() {
         usedMemory += optionsManager.memoryPerRequest;
         memorySize.add(new Long(usedMemory));
-        maxMemorySize = max(usedMemory, maxResponseTime);
+        maxMemorySize = (long)max(usedMemory, maxMemorySize);
     }
     
     void reportResponseEnd(int duration) {
@@ -182,7 +182,7 @@ class Monitor {
         
         avgResponseTime = (int)(cumResponseTime/totalRequestsCount); 
         responseTimes.add(new Long(avgResponseTime));
-        maxResponseTime = max(avgResponseTime, maxResponseTime);
+        maxResponseTime = (long)max(avgResponseTime, maxResponseTime);
         
         if (duration>optionsManager.timeoutThresholdMs) {
             timeoutCount++;

@@ -63,32 +63,36 @@ class Plotter {
           noFill();
           float sparklineWidth = pBoxSize.x - 40;
           float sparklineHeight = pBoxSize.y * 3/4;
-          float x = 0;
-          float memY = pBoxSize.y; 
-          float value = 0;
           String unitName = "";
           int unitOrdinal = 0;
           switch (pUnitType) {
               case DURATION:
                 State.DurationUnit unitd = getDurationUnit(pMaxValue);
-                logger.debug("Plotter", "pMaxValue " + pMaxValue +  " unit " + unitd);
+                //logger.debug("Plotter", "pMaxValue " + pMaxValue +  " unit " + unitd);
                 unitName = unitd.name();
                 unitOrdinal = unitd.ordinal();
               break;
               case BYTES:
                 State.BytesUnit unitb = getBytesUnit(pMaxValue);
-                logger.debug("Plotter", "pMaxValue " + pMaxValue +  " unit " + unitb);
+                //logger.debug("Plotter", "pMaxValue " + pMaxValue +  " unit " + unitb);
                 unitName = unitb.name();
                 unitOrdinal = unitb.ordinal();
               break;
           }
-          float scaleFactor =  pow(1000, unitOrdinal);
-          float pMaxValueScaled = pMaxValue / scaleFactor;
+          float x = 0;
+          float memY = pBoxSize.y; 
+          double value = 0;
+          double scaleFactor =  pow(1000, unitOrdinal);
+          double pMaxValueScaled = pMaxValue / scaleFactor;
           for (int i=0; i<pData.size(); i++) {
               value = pData.get(i).longValue() / scaleFactor;
               //logger.debug("Plotter", "raw " + pData.get(i).longValue() + " value " + value +  " unit " + unit);
               x = (pData.size()<sparklineWidth?1:(1*sparklineWidth/pData.size()));
-              float y = pBoxSize.y - value*sparklineHeight/pMaxValueScaled;
+              float y = (float)(pBoxSize.y - value*sparklineHeight/pMaxValueScaled);
+              if (y<0) {
+                logger.debug("Plotter", "y " + y + " raw " + pData.get(i).longValue() + " value " + value);
+                logger.debug("Plotter", "unitOrdinal " + unitOrdinal + " scaleFactor " + scaleFactor +  " pMaxValue " + pMaxValue  + " pMaxValueScaled " + pMaxValueScaled);
+              }
               line(0, memY, x, y);
               memY = y;
               translate(x,0);
