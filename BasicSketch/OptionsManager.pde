@@ -27,7 +27,7 @@ class OptionsManager {
   boolean useMaxPoolSize = false;
   int maxPoolSize;
   
-  boolean useTimeouts = false;
+  boolean useTimeouts = true; 
   int timeoutThresholdMs = 10000;
   
   OptionsManager() {

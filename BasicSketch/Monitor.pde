@@ -58,12 +58,28 @@ class Monitor {
           // text
           fill(0);
           textFont(f,14);
-          text("users   requests              errors", 0, 0);
+          text("users", 0, 0);
           textFont(f,22);
-          float errorRate = (totalRequestsCount>0?timeoutCount*100/totalRequestsCount:0);
-          String values = String.format("%03d  %3d - %02d/s  %2.0f%% - %2d/s",  conversationStartedCount,  
-              pendingRequestsCount, totalRequestsCount*1000/millis(), errorRate, timeoutCount*1000/millis());
+          String values = String.format("%03d",  conversationStartedCount);
           text(values, 0, 20);
+          
+          translate(50,0);
+          textFont(f,14);
+          text("requests", 0, 0);
+          textFont(f,22);
+          values = String.format("%3d - %2d/s",  pendingRequestsCount, totalRequestsCount*1000/millis());
+          text(values, 0, 20);
+          
+          if (optionsManager.useTimeouts) {
+              translate(100,0);
+              float errorRate = (totalRequestsCount>0?timeoutCount*100/totalRequestsCount:0);
+              fill(255*errorRate/100,0,0);
+              textFont(f,14);
+              text("errors", 0, 0);
+              textFont(f,22);
+              values = String.format("%2.0f%% - %2d/s",  errorRate, timeoutCount*1000/millis());
+              text(values, 0, 20);
+          }
           popMatrix();
           displayRespTimeSparkLine();
     }
