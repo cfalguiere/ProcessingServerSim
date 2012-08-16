@@ -49,6 +49,7 @@ void draw() {
   
   server.display();
   
+  monitor.displayConfig();
   monitor.displayRequestsStats();
   monitor.displayServerPoolStats();
   monitor.displayBacklogStatus();
