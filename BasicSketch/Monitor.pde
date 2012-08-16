@@ -75,8 +75,11 @@ class Monitor {
           textFont(f,14);
           text("requests", 0, 0);
           textFont(f,22);
-          values = String.format("%3d - %2d/s",  totalRequestsCount, totalRequestsCount*1000/millis());
+          values = String.format("%3d",  totalRequestsCount);
           text(values, 0, 20);
+          textFont(f,18);
+          values = String.format("(%2d/s)",  totalRequestsCount*1000/millis());
+          text(values, 38, 20);
           
           if (optionsManager.useTimeouts) {
               translate(120,0);
