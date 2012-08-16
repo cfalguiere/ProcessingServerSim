@@ -34,7 +34,7 @@ class OptionsManager {
        configureResourceUsage();
        configureResourceUsageImpact();
        configureVariability();
-       //configureLimitedPoolAndBacklog();
+       configureLimitedPoolAndBacklog();
        //configureDebug();
   }
   

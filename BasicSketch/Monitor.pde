@@ -67,7 +67,7 @@ class Monitor {
           textFont(f,14);
           text("requests", 0, 0);
           textFont(f,22);
-          values = String.format("%3d - %2d/s",  pendingRequestsCount, totalRequestsCount*1000/millis());
+          values = String.format("%3d - %2d/s",  totalRequestsCount, totalRequestsCount*1000/millis());
           text(values, 0, 20);
           
           if (optionsManager.useTimeouts) {
@@ -89,15 +89,27 @@ class Monitor {
         cpuUsage = constrain(poolBusy*(100/optionsManager.poolSaturation), 0, 100);
         cpuQueue = constrain(poolBusy - optionsManager.poolSaturation, 0, 10000);
         
+        // requests
         pushMatrix();
-        translate(layoutManager.resourcesBoxLeftMargin,layoutManager.serverBoxTopMargin + 100);
+        translate(layoutManager.resourcesBoxLeftMargin,layoutManager.resourcesBoxTopMargin+10);
+        textFont(f,14);
+        text("pending", 0, 0);
+        text("requests", 0, 14);
+        textFont(f,22);
+        String values = String.format("%3d",  pendingRequestsCount);
+        text(values, 0, 35);
+        popMatrix();
+        
+        // CPU title
+        pushMatrix();
+        translate(layoutManager.cpuBoxPosition.x, layoutManager.cpuBoxPosition.y);
         fill(0);
         textFont(f,14);
-        text("CPU", 0, -24);
+        text("CPU", 0, -5);
         displayCpuUsage();
         displayCpuQueue();
-
         popMatrix();
+
         
         displayMemorySparkLine();
     }

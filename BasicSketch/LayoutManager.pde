@@ -7,9 +7,9 @@ class LayoutManager {
   int clientSideLeftMargin = 10;
   int clientSideVertSpacer = 2;
   
-  int serverBoxTopMargin = 40;
+  int serverBoxTopMargin = 120;
   int serverBoxLeftMargin = 300;
-  int serverBoxHeight = 400 - serverBoxTopMargin*2;
+  int serverBoxHeight = 400 - serverBoxTopMargin - 20;
   int serverBoxWidth = 140;
   int serverBoxVertSpacer = 2;
   
@@ -19,7 +19,7 @@ class LayoutManager {
   int serverBacklogHeight =  round(clientSideRad*2) + clientSideVertSpacer*3;
   
   int serverPoolLeftMargin = serverBoxLeftMargin + 3;
-  int serverPoolTopMargin = (optionsManager.useMaxPoolSize?serverBacklogTopMargin + serverBacklogHeight:30) + 50;
+  int serverPoolTopMargin = (optionsManager.useMaxPoolSize?serverBacklogTopMargin + serverBacklogHeight:serverBoxTopMargin) + 50;
   int serverPoolWidth = serverBoxWidth - 6;
 
   int transferAnimationDuration = 300;
@@ -33,11 +33,13 @@ class LayoutManager {
   float resourcesBoxLeftMargin = serverBoxLeftMargin + serverBoxWidth + 20;
   float resourcesBoxTopMargin = serverBoxTopMargin;
 
-  PVector respTimeBoxPosition = new PVector(10, 50);
+  PVector respTimeBoxPosition = new PVector(serverPoolLeftMargin-3, 10);
   PVector respTimeBoxSize = new PVector(250, 40);
+
+  PVector cpuBoxPosition = new PVector(resourcesBoxLeftMargin, resourcesBoxTopMargin + 90);
   float gaugeDiameter = 80;
 
-  PVector memoryBoxPosition = new PVector(resourcesBoxLeftMargin, resourcesBoxTopMargin + 200);
+  PVector memoryBoxPosition = new PVector(resourcesBoxLeftMargin, resourcesBoxTopMargin + 160);
   PVector memoryBoxSize = new PVector(150, 40);
   
   
