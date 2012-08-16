@@ -1,11 +1,11 @@
 class OptionsManager { 
-  int maxConversations = 200;
+  int maxConversations = 100;
   int startDelayMs = 1000;
 
   int arrivalIntervalMsMean = 100;
   float arrivalIntervalMsSD = 0;
 
-  int clientSideMaxRows = 12;
+  int clientSideMaxRows = 10;
   //int serverPoolMaxRows = 10;
   
   int responseTimeMean = 1500;

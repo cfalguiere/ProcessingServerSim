@@ -14,7 +14,7 @@ PFont f;
 boolean stopping = false;
 
 void setup() {
-  size(600, 400);
+  size(640, 400);
   background(255);
   smooth();
   f = createFont("Arial",16,true); // Arial, 16 point, anti-aliasing on
@@ -48,13 +48,11 @@ void draw() {
   server.display();
   
   monitor.displayRequestsStats();
-  monitor.displayRespTimeSparkLine();
   monitor.displayServerPoolStats();
   monitor.displayBacklogStatus();
   if (optionsManager.showResourceUsage) {
       monitor.displayResourceUsage();
   }
-  monitor.displayMemorySparkLine();
 }
 
 

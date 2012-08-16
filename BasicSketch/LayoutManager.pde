@@ -3,12 +3,12 @@ import org.uncommons.maths.random.GaussianGenerator;
 class LayoutManager { 
   float clientSideRad = 20;
   float clientSideRadMoving = 15;
-  int clientSideTopMargin = 110;
+  int clientSideTopMargin = 130;
   int clientSideLeftMargin = 10;
   int clientSideVertSpacer = 2;
   
   int serverBoxTopMargin = 40;
-  int serverBoxLeftMargin = 275;
+  int serverBoxLeftMargin = 300;
   int serverBoxHeight = 400 - serverBoxTopMargin*2;
   int serverBoxWidth = 140;
   int serverBoxVertSpacer = 2;
@@ -30,14 +30,14 @@ class LayoutManager {
   float respTimeChartHeight = 40;
   color lineColor = #ABCBE5;
 
-  float resourcesBoxLeftMargin = serverBoxLeftMargin + serverBoxWidth + 10;
+  float resourcesBoxLeftMargin = serverBoxLeftMargin + serverBoxWidth + 20;
   float resourcesBoxTopMargin = serverBoxTopMargin;
 
   PVector respTimeBoxPosition = new PVector(10, 50);
   PVector respTimeBoxSize = new PVector(250, 40);
   float gaugeDiameter = 80;
 
-  PVector memoryBoxPosition = new PVector(resourcesBoxLeftMargin, resourcesBoxTopMargin + 270);
+  PVector memoryBoxPosition = new PVector(resourcesBoxLeftMargin, resourcesBoxTopMargin + 200);
   PVector memoryBoxSize = new PVector(150, 40);
   
   

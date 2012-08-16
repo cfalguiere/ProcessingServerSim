@@ -66,32 +66,25 @@ class Monitor {
           }
           text(values, 0, 20);
           popMatrix();
+          displayRespTimeSparkLine();
     }
 
     void  displayResourceUsage() { // TODO refactor
         
         cpuUsage = constrain(poolBusy*(100/optionsManager.poolSaturation), 0, 100);
         cpuQueue = constrain(poolBusy - optionsManager.poolSaturation, 0, 10000);
-          pushMatrix();
-          translate(layoutManager.resourcesBoxLeftMargin,layoutManager.serverBoxTopMargin);
-          // text
-          fill(0);
-          textFont(f,14);
-          text("Memory", 0, 95);
-          text("GC Pauses ", 0, 135);
-          // text memory
-          fill(0);
-          textFont(f,18);
-          text(formatter.format(usedMemory), 0, 115);
-          text(formatter.format(gcPauses), 0, 155);
-          
-          pushMatrix();
-          translate(0, 200);
-          displayCpuUsage();
-          displayCpuQueue();
-          popMatrix();
+        
+        pushMatrix();
+        translate(layoutManager.resourcesBoxLeftMargin,layoutManager.serverBoxTopMargin + 100);
+        fill(0);
+        textFont(f,14);
+        text("CPU", 0, -24);
+        displayCpuUsage();
+        displayCpuQueue();
 
-          popMatrix();
+        popMatrix();
+        
+        displayMemorySparkLine();
     }
 
     void  displayCpuUsage() { 
