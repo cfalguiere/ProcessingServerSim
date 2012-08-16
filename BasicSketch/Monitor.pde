@@ -62,6 +62,10 @@ class Monitor {
           textFont(f,22);
           String values = String.format("%03d",  conversationStartedCount);
           text(values, 0, 20);
+          if (optionsManager.usePeaks) {
+              textFont(f,10);
+              text(String.format("%ds", (scheduler.nextPeak - millis())/1000), 0, 35);
+          }
           
           translate(50,0);
           textFont(f,14);
