@@ -32,6 +32,7 @@ void draw() {
   }
  
   layoutManager.displayServerBox();
+  layoutManager.displayRespTimeChartBox();
   
   frameCount++;
   
@@ -47,9 +48,10 @@ void draw() {
   
   server.display();
   
+  monitor.displayRequestsStats();
+  monitor.displayRespTimeSparkLine();
   monitor.displayServerPoolStats();
   monitor.displayBacklogStatus();
-  monitor.displayRequestsStats();
   if (optionsManager.showResourceUsage) {
       monitor.displayResourceUsage();
   }

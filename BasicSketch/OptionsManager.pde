@@ -30,7 +30,7 @@ class OptionsManager {
        configureResourceUsageImpact();
        configureVariableThinktime();
        configureLimitedPoolAndBacklog();
-       configureDebug();
+      // configureDebug();
   }
   
   void configureResourceUsage() {
@@ -59,7 +59,7 @@ class OptionsManager {
   
   
   void configureDebug() {
-    maxConversations = 10;
+    maxConversations = 50;
     clientSideMaxRows = 10;
     //serverPoolMaxRows = 5;
     responseTimeMean = 2000;

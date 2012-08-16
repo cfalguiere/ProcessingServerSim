@@ -43,9 +43,8 @@ class Conversation {
         scheduler.scheduleReceiving(this);
         posInPool = server.terminatingRequest(this);
         animation = new Animation(this, State.AnimationValue.RECEIVING);
-        monitor.reportResponseTime(millis() - requestStartTime);
+        monitor.reportResponse(millis() - requestStartTime);
         monitor.decPendingRequestsCount();
-        monitor.incTotalRequestsCount();
         break;
       case THINKING:
         scheduler.scheduleThinkTime(this);

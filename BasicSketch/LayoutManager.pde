@@ -3,7 +3,7 @@ import org.uncommons.maths.random.GaussianGenerator;
 class LayoutManager { 
   float clientSideRad = 20;
   float clientSideRadMoving = 15;
-  int clientSideTopMargin = 80;
+  int clientSideTopMargin = 100;
   int clientSideLeftMargin = 10;
   int clientSideVertSpacer = 2;
   
@@ -24,12 +24,31 @@ class LayoutManager {
 
   int transferAnimationDuration = 300;
 
+  float respTimeBoxLeftMargin = 10;
+  float respTimeBoxTopMargin = 50;
+  float respTimeChartWidth = 250;
+  float respTimeChartHeight = 40;
+  color lineColor = #ABCBE5;
+
   float resourcesBoxLeftMargin = serverBoxLeftMargin + serverBoxWidth + 10;
   float resourcesBoxTopMargin = serverBoxTopMargin;
   float gaugeDiameter = 80;
 
   
   GaussianGenerator rng = new GaussianGenerator(3, 2, new Random());
+  
+    void displayRespTimeChartBox() {
+          pushMatrix();
+          translate(respTimeBoxLeftMargin, respTimeBoxTopMargin);
+          stroke(lineColor);
+          strokeWeight(1);  
+          noFill();
+          rectMode(CORNERS);
+          //rect(0, 0, respTimeChartWidth, respTimeChartHeight);
+          line(0, respTimeChartHeight, respTimeChartWidth, respTimeChartHeight);
+          line(0, 0, 0, respTimeChartHeight);
+          popMatrix();
+     }
   
     void displayServerBox() {
           pushMatrix();

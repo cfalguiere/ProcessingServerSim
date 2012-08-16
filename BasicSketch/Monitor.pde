@@ -11,11 +11,16 @@ class Monitor {
     int usedMemory;
     int gcPauses;
     DecimalFormat formatter;
+    DecimalFormat sparklineFormatter;
+    List<Integer> responseTimes = new ArrayList<Integer>();
+    int avgResponseTime = 0;
+    int maxResponseTime = 0;
     
     Monitor() {
       DecimalFormatSymbols symbols = new DecimalFormatSymbols();
       symbols.setGroupingSeparator(' ');
       formatter = new DecimalFormat("###,###.##", symbols);
+      sparklineFormatter = new DecimalFormat("##.#", symbols);
     }
     
 
@@ -52,10 +57,10 @@ class Monitor {
           textFont(f,14);
           text("users   requests              resp. time", 0, 0);
           textFont(f,22);
-          long avgResponseTime = (totalRequestsCount>0?cumResponseTime/totalRequestsCount:-1);
+          logger.debug("Monitor", "maxResponseTime " + maxResponseTime);
           String values = String.format("%03d  %03d - %02d/s",  conversationStartedCount,  
               pendingRequestsCount, totalRequestsCount*1000/millis());
-          if (avgResponseTime >= 0) {
+          if (maxResponseTime > 0) {
             values = String.format("%s  %04dms",  values, avgResponseTime);  
           }
           text(values, 0, 20);
@@ -118,17 +123,53 @@ class Monitor {
         }
     }
     
+    void displayRespTimeSparkLine() { // TODO sparkline util
+          pushMatrix();
+          translate(layoutManager.respTimeBoxLeftMargin, layoutManager.respTimeBoxTopMargin);
+          stroke(#ABCBE5);
+          strokeWeight(2);  
+          noFill();
+          float sparklineWidth = layoutManager.respTimeChartWidth - 25;
+          float sparklineHeight = layoutManager.respTimeChartHeight*3/4;
+          float x = 0;
+          float memY = layoutManager.respTimeChartHeight; 
+          for (int i=0; i<responseTimes.size(); i++) {
+              int value = responseTimes.get(i).intValue();
+              x = (responseTimes.size()<sparklineWidth?1:(1*sparklineWidth/responseTimes.size()));
+              float y = layoutManager.respTimeChartHeight - value*(sparklineHeight)/maxResponseTime;
+              line(0, memY, x, y);
+              memY = y;
+              translate(x,0);
+          }
+          if (x>0) {
+              textFont(f,15);
+              fill(0);
+              String label = sparklineFormatter.format(avgResponseTime/1000.0) + "s";  
+              text(label, x+3, memY+5);
+          }
+          popMatrix();
+     }
+    
     void incGcPause(int duration) {gcPauses+=duration;}
     void incPoolBusyCount() {poolBusy++;}
     void decPoolBusyCount() {poolBusy--;}
     void incConversationStartedCount() {conversationStartedCount++;}
+    
     void incTotalRequestsCount() {
-      totalRequestsCount++;
-      usedMemory += optionsManager.memoryPerRequest;
     }
+    
     void incPendingRequestsCount() {pendingRequestsCount++;}
     void decPendingRequestsCount() {pendingRequestsCount--;}
-    void reportResponseTime(int duration) {cumResponseTime+=duration;}
+    
+    void reportResponse(int duration) {
+        cumResponseTime+=duration;
+        totalRequestsCount++;
+        usedMemory += optionsManager.memoryPerRequest;
+        
+        avgResponseTime = (int)(cumResponseTime/totalRequestsCount); 
+        responseTimes.add(new Integer(avgResponseTime));
+        maxResponseTime = max(avgResponseTime, maxResponseTime);
+    }
 
     void mimicGarbage() {
       usedMemory = poolBusy*optionsManager.memoryPerRequest;

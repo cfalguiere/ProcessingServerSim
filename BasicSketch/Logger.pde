@@ -6,7 +6,7 @@ class Logger {
     }
 
     void debug(String sender, String message) {
-      if (sender.equals("Conversation") || sender.equals("Animation")){
+      if (sender.equals("Monitor")){
           log("D", sender, message);    
       }
     }
