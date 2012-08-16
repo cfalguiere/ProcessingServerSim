@@ -81,31 +81,41 @@ class Monitor {
           
           pushMatrix();
           translate(0, 200);
-          // gauge
-          noStroke();
-          fill(255*cpuUsage/100,255*(100-cpuUsage)/100,96);
-          ellipseMode(CORNERS);
-          float gaugeDiameter = 80;
-          arc(0, 0, gaugeDiameter, gaugeDiameter, PI, PI*cpuUsage/100+PI); 
-          if (cpuUsage>0){
-              textFont(f,16);
-              text(String.format("%02d%%",cpuUsage), gaugeDiameter/2-15, gaugeDiameter/2+15);
-          }
-          if (cpuQueue>0){
-              // vert bar
-              noStroke();
-              rectMode(CORNERS);
-              fill(64,64,64);
-              rect(gaugeDiameter + 20, gaugeDiameter/2, gaugeDiameter + 20 + 20, gaugeDiameter/2 - cpuQueue);
-              // vert bar text
-              textFont(f,16);
-              text(String.format("%02d",cpuQueue), gaugeDiameter + 20, gaugeDiameter/2 - cpuQueue - 5);
-              textFont(f,12);
-              text("Queue", gaugeDiameter + 20, gaugeDiameter/2 + 13);
-          }
+          displayCpuUsage();
+          displayCpuQueue();
           popMatrix();
 
           popMatrix();
+    }
+
+    void  displayCpuUsage() { 
+        // gauge
+        noStroke();
+        fill(255*cpuUsage/100,255*(100-cpuUsage)/100,96);
+        ellipseMode(CORNERS);
+        float gaugeDiameter = layoutManager.gaugeDiameter;
+        arc(0, 0, gaugeDiameter, gaugeDiameter, PI, PI*cpuUsage/100+PI); 
+        if (cpuUsage>0){
+            textFont(f,16);
+            text(String.format("%02d%%",cpuUsage), gaugeDiameter/2-15, gaugeDiameter/2+15);
+        }
+    }
+
+    void  displayCpuQueue() { 
+        if (cpuQueue>0){
+            float gaugeDiameter = layoutManager.gaugeDiameter;
+            float spacer = 20;
+            // vert bar
+            noStroke();
+            rectMode(CORNERS);
+            fill(64,64,64);
+            rect(gaugeDiameter + 20, gaugeDiameter/2, gaugeDiameter + 20 + 20, gaugeDiameter/2 - cpuQueue);
+            // vert bar text
+            textFont(f,16);
+            text(String.format("%02d",cpuQueue), gaugeDiameter + spacer, gaugeDiameter/2 - cpuQueue - 5);
+            textFont(f,12);
+            text("Queue", gaugeDiameter + spacer, gaugeDiameter/2 + 13);
+        }
     }
     
     void incGcPause(int duration) {gcPauses+=duration;}

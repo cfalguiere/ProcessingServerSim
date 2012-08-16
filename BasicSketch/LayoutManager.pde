@@ -21,8 +21,11 @@ class LayoutManager {
   int serverPoolLeftMargin = serverBoxLeftMargin + 3;
   int serverPoolTopMargin = serverBacklogTopMargin + serverBacklogHeight + 50;
   int serverPoolWidth = serverBoxWidth - 6;
-  
+
   int transferAnimationDuration = 300;
+
+  float gaugeDiameter = 80;
+
   
   GaussianGenerator rng = new GaussianGenerator(3, 2, new Random());
   
