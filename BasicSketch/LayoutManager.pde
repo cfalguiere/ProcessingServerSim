@@ -24,6 +24,8 @@ class LayoutManager {
 
   int transferAnimationDuration = 300;
 
+  float resourcesBoxLeftMargin = serverBoxLeftMargin + serverBoxWidth + 10;
+  float resourcesBoxTopMargin = serverBoxTopMargin;
   float gaugeDiameter = 80;
 
   

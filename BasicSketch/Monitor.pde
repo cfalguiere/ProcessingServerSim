@@ -67,7 +67,7 @@ class Monitor {
         cpuUsage = constrain(poolBusy*(100/optionsManager.poolSaturation), 0, 100);
         cpuQueue = constrain(poolBusy - optionsManager.poolSaturation, 0, 10000);
           pushMatrix();
-          translate(layoutManager.serverBoxLeftMargin+layoutManager.serverBoxWidth + 10,layoutManager.serverBoxTopMargin + 10);
+          translate(layoutManager.resourcesBoxLeftMargin,layoutManager.serverBoxTopMargin);
           // text
           fill(0);
           textFont(f,14);
