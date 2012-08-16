@@ -77,7 +77,8 @@ class Monitor {
               textFont(f,14);
               text("errors", 0, 0);
               textFont(f,22);
-              values = String.format("%2.0f%% - %2d/s",  errorRate, timeoutCount*1000/millis());
+              //values = String.format("%2.0f%% - %2d/s",  errorRate, timeoutCount*1000/millis());
+              values = String.format("%2.0f%%",  errorRate);
               text(values, 0, 20);
           }
           popMatrix();
