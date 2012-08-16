@@ -135,33 +135,7 @@ class Monitor {
         plotter.drawSparkline("Resp. Time", responseTimes, maxResponseTime, layoutManager.respTimeBoxPosition, layoutManager.respTimeBoxSize, State.UnitType.DURATION);
     }
     
-    /*
-    void displayRespTimeSparkLine() { // TODO sparkline util
-          pushMatrix();
-          translate(layoutManager.respTimeBoxLeftMargin, layoutManager.respTimeBoxTopMargin);
-          stroke(#ABCBE5);
-          strokeWeight(2);  
-          noFill();
-          float sparklineWidth = layoutManager.respTimeChartWidth - 25;
-          float sparklineHeight = layoutManager.respTimeChartHeight*3/4;
-          float x = 0;
-          float memY = layoutManager.respTimeChartHeight; 
-          for (int i=0; i<responseTimes.size(); i++) {
-              int value = responseTimes.get(i).intValue();
-              x = (responseTimes.size()<sparklineWidth?1:(1*sparklineWidth/responseTimes.size()));
-              float y = layoutManager.respTimeChartHeight - value*(sparklineHeight)/maxResponseTime;
-              line(0, memY, x, y);
-              memY = y;
-              translate(x,0);
-          }
-          if (x>0) {
-              textFont(f,15);
-              fill(0);
-              String label = sparklineFormatter.format(avgResponseTime/1000.0) + "s";  
-              text(label, x+3, memY+5);
-          }
-          popMatrix();
-     }*/
+
     
     void incGcPause(int duration) {gcPauses+=duration;}
     void incPoolBusyCount() {poolBusy++;}

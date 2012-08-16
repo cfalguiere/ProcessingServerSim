@@ -42,20 +42,7 @@ class LayoutManager {
   
   
   GaussianGenerator rng = new GaussianGenerator(3, 2, new Random());
-  /*
-    void displayRespTimeChartBox() {
-          pushMatrix();
-          translate(respTimeBoxLeftMargin, respTimeBoxTopMargin);
-          stroke(lineColor);
-          strokeWeight(1);  
-          noFill();
-          rectMode(CORNERS);
-          //rect(0, 0, respTimeChartWidth, respTimeChartHeight);
-          line(0, respTimeChartHeight, respTimeChartWidth, respTimeChartHeight);
-          line(0, 0, 0, respTimeChartHeight);
-          popMatrix();
-     }*/
-  
+
     void displayServerBox() {
           pushMatrix();
           translate(serverBoxLeftMargin, serverBoxTopMargin);
