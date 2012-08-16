@@ -55,6 +55,7 @@ void draw() {
   if (optionsManager.showResourceUsage) {
       monitor.displayResourceUsage();
   }
+  monitor.displayMemorySparkLine();
 }
 
 

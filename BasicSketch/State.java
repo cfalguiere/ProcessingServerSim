@@ -7,5 +7,13 @@ class State {
      NONE, SENDING, RECEIVING
   }
   
+  public enum UnitType {
+     TIME, BYTES  
+  }
+  
+  public enum BytesUnit {
+     o, Ko, Mo, Go  
+  }
+  
 }
 

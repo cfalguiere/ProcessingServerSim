@@ -8,13 +8,15 @@ class Monitor {
     int poolBusy = 0;
     int cpuUsage;
     int cpuQueue;
-    int usedMemory;
+    int usedMemory = optionsManager.startupMemory;
     int gcPauses;
     DecimalFormat formatter;
     DecimalFormat sparklineFormatter;
     List<Integer> responseTimes = new ArrayList<Integer>();
+    List<Long> memorySize = new ArrayList<Long>();
     int avgResponseTime = 0;
     int maxResponseTime = 0;
+    int maxMemorySize = optionsManager.startupMemory;
     
     Monitor() {
       DecimalFormatSymbols symbols = new DecimalFormatSymbols();
@@ -57,7 +59,6 @@ class Monitor {
           textFont(f,14);
           text("users   requests              resp. time", 0, 0);
           textFont(f,22);
-          logger.debug("Monitor", "maxResponseTime " + maxResponseTime);
           String values = String.format("%03d  %03d - %02d/s",  conversationStartedCount,  
               pendingRequestsCount, totalRequestsCount*1000/millis());
           if (maxResponseTime > 0) {
@@ -123,6 +124,12 @@ class Monitor {
         }
     }
     
+        
+    void displayMemorySparkLine() { 
+        Plotter plotter = new Plotter();
+        plotter.drawSparkline("Memory", memorySize, maxMemorySize, layoutManager.memoryBoxPosition, layoutManager.memoryBoxSize, State.UnitType.BYTES);
+    }
+    
     void displayRespTimeSparkLine() { // TODO sparkline util
           pushMatrix();
           translate(layoutManager.respTimeBoxLeftMargin, layoutManager.respTimeBoxTopMargin);
@@ -158,13 +165,20 @@ class Monitor {
     void incTotalRequestsCount() {
     }
     
-    void incPendingRequestsCount() {pendingRequestsCount++;}
+    void incPendingRequestsCount() {
+        pendingRequestsCount++;
+    }
     void decPendingRequestsCount() {pendingRequestsCount--;}
+
+    void reportResponseBegin() {
+        usedMemory += optionsManager.memoryPerRequest;
+        memorySize.add(new Long(usedMemory));
+        maxMemorySize = max(usedMemory, maxResponseTime);
+    }
     
-    void reportResponse(int duration) {
+    void reportResponseEnd(int duration) {
         cumResponseTime+=duration;
         totalRequestsCount++;
-        usedMemory += optionsManager.memoryPerRequest;
         
         avgResponseTime = (int)(cumResponseTime/totalRequestsCount); 
         responseTimes.add(new Integer(avgResponseTime));
@@ -172,7 +186,7 @@ class Monitor {
     }
 
     void mimicGarbage() {
-      usedMemory = poolBusy*optionsManager.memoryPerRequest;
+      usedMemory = optionsManager.startupMemory + poolBusy*optionsManager.memoryPerRequest;
       if (usedMemory>2000000) {
           logger.info("Monitor", "warning usedMemory " + usedMemory);
       }

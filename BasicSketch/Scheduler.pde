@@ -57,7 +57,7 @@ class Scheduler {
     void scheduleGC() {
         if (!inGc) {
             inGc = true;
-            gcUntilMs = millis() + optionsManager.gcDuration;
+            gcUntilMs = millis() + optionsManager.gcDurationMs;
         }
     }
   
@@ -66,7 +66,7 @@ class Scheduler {
          if (gcUntilMs<=millis()) {
               inGc = false;
               monitor.mimicGarbage();
-              monitor.incGcPause(optionsManager.gcDuration);
+              monitor.incGcPause(optionsManager.gcDurationMs);
          }
          return;
        }

@@ -38,12 +38,13 @@ class Conversation {
         break;
       case DOING:
         scheduler.scheduleResponse(this);
+        monitor.reportResponseBegin(); 
         break;
       case RECEIVING:
         scheduler.scheduleReceiving(this);
         posInPool = server.terminatingRequest(this);
         animation = new Animation(this, State.AnimationValue.RECEIVING);
-        monitor.reportResponse(millis() - requestStartTime);
+        monitor.reportResponseEnd(millis() - requestStartTime);
         monitor.decPendingRequestsCount();
         break;
       case THINKING:

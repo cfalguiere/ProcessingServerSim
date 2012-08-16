@@ -34,6 +34,9 @@ class LayoutManager {
   float resourcesBoxTopMargin = serverBoxTopMargin;
   float gaugeDiameter = 80;
 
+  PVector memoryBoxPosition = new PVector(resourcesBoxLeftMargin, resourcesBoxTopMargin + 270);
+  PVector memoryBoxSize = new PVector(150, 40);
+  
   
   GaussianGenerator rng = new GaussianGenerator(3, 2, new Random());
   
