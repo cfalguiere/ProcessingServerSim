@@ -18,6 +18,8 @@ class Monitor {
     long usedMemory = optionsManager.startupMemory;
     long maxMemorySize = optionsManager.startupMemory;
     int timeoutCount = 0;
+    long cumNbUsersOverTime = 0;
+    long countNbUsersOverTime = 0;
     
     Monitor() {
       DecimalFormatSymbols symbols = new DecimalFormatSymbols();
@@ -70,6 +72,11 @@ class Monitor {
           textFont(f,22);
           String values = String.format("%03d",  conversationStartedCount);
           text(values, 0, 20);
+          cumNbUsersOverTime += conversationStartedCount;
+          countNbUsersOverTime++;
+          textFont(f,10);
+          values = String.format("avg %03d",  cumNbUsersOverTime/countNbUsersOverTime);
+          text(values, 0, 35);
           
           translate(50,0);
           textFont(f,14);
