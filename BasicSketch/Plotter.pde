@@ -81,16 +81,27 @@ class Plotter {
           }
           float x = 0;
           float memY = pBoxSize.y; 
-          double value = 0;
+          double normValue = 0;
           double scaleFactor =  pow(1000, unitOrdinal);
           double pMaxValueScaled = pMaxValue / scaleFactor;
           for (int i=0; i<pData.size(); i++) {
-              value = pData.get(i).longValue() / scaleFactor;
+              if (pUnitType == State.UnitType.DURATION) { 
+                  long ns = pData.get(i).longValue()/1000;
+                  float nsLimit = 20.0;//TODO generalisation - remove magic number
+                  float severity = constrain(ns/nsLimit, 0, 1);
+                  float r = 100 + (255-100)*severity;
+                  float g = 190*(1-severity);
+                  float b = 247*(1-severity);
+                  stroke(r, g, b);
+              } else {
+                  stroke(145, 190, 247); 
+              }
+              normValue = pData.get(i).longValue() / scaleFactor;
               //logger.debug("Plotter", "raw " + pData.get(i).longValue() + " value " + value +  " unit " + unit);
               x = (pData.size()<sparklineWidth?1:(1*sparklineWidth/pData.size()));
-              float y = (float)(pBoxSize.y - value*sparklineHeight/pMaxValueScaled);
+              float y = (float)(pBoxSize.y - normValue*sparklineHeight/pMaxValueScaled);
               if (y<0) {
-                logger.debug("Plotter", "y " + y + " raw " + pData.get(i).longValue() + " value " + value);
+                logger.debug("Plotter", "y " + y + " raw " + pData.get(i).longValue() + " value " + normValue);
                 logger.debug("Plotter", "unitOrdinal " + unitOrdinal + " scaleFactor " + scaleFactor +  " pMaxValue " + pMaxValue  + " pMaxValueScaled " + pMaxValueScaled);
               }
               line(0, memY, x, y);
@@ -100,7 +111,7 @@ class Plotter {
           if (x>0) {
               textFont(f,15);
               fill(0);
-              String label = String.format("%s %s", valueFormatter.format(value),unitName);  
+              String label = String.format("%s %s", valueFormatter.format(normValue),unitName);  
               text(label, x+3, memY+5);
           }
           popMatrix();
