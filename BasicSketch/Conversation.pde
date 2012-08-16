@@ -6,7 +6,8 @@ class Conversation {
   State.StateValue currentState;
   color fillColor = color(random(150)+100,random(150)+50, random(150)+50);
   int posInPool;
-  int currentResponseTime;
+  //int currentResponseTime;
+  int requestStartTime;
   Animation animation;
   
   Conversation() {
@@ -29,6 +30,7 @@ class Conversation {
       case SENDING:
         scheduler.scheduleSending(this); // TODO enlever et simplifier les constructeurs
         animation = new Animation(this, State.AnimationValue.SENDING);
+        requestStartTime = millis();
         break;
       case WAITING:
         posInPool = server.incomingRequest(this);
@@ -41,6 +43,7 @@ class Conversation {
         scheduler.scheduleReceiving(this);
         posInPool = server.terminatingRequest(this);
         animation = new Animation(this, State.AnimationValue.RECEIVING);
+        monitor.reportResponseTime(millis() - requestStartTime);
         monitor.decPendingRequestsCount();
         monitor.incTotalRequestsCount();
         break;

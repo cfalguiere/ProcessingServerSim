@@ -59,13 +59,13 @@ class OptionsManager {
   
   
   void configureDebug() {
-    maxConversations = 50;
+    maxConversations = 10;
     clientSideMaxRows = 10;
     //serverPoolMaxRows = 5;
-    responseTimeMean = 5000;
-    thinkTimeMean = 5000;
-    useMaxPoolSize = false;
-    maxPoolSize = 50;
+    responseTimeMean = 2000;
+    thinkTimeMean = 2000;
+    useMaxPoolSize = true;
+    maxPoolSize = 2;
   }
 }
 

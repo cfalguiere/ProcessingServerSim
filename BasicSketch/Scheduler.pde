@@ -38,10 +38,9 @@ class Scheduler {
     }
     
     void scheduleResponse(Conversation conversation) {
-        conversation.currentResponseTime = scheduler.getResponseTimeRandom();
-        logger.debug("Scheduler", conversation.id + " Waiting " +  conversation.currentResponseTime);
-        schedulerEvents.add(new Event(millis()+ conversation.currentResponseTime, conversation, State.StateValue.RECEIVING));
-        monitor.reportResponseTime( conversation.currentResponseTime);
+        int serverResponseTime = scheduler.getResponseTimeRandom();
+        logger.debug("Scheduler", conversation.id + " Waiting " +  serverResponseTime);
+        schedulerEvents.add(new Event(millis()+ serverResponseTime, conversation, State.StateValue.RECEIVING));
     }
     
     void scheduleReceiving(Conversation conversation) {
