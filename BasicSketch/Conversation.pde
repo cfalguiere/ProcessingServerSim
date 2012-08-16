@@ -8,7 +8,9 @@ class Conversation {
   int posInPool;
   //int currentResponseTime;
   int requestStartTime;
+  int nbRequestsInSession;
   Animation animation;
+  boolean isInPeak = false;
   
   Conversation() {
     id = conversationCounter++;
@@ -48,7 +50,18 @@ class Conversation {
         monitor.decPendingRequestsCount();
         break;
       case THINKING:
-        scheduler.scheduleThinkTime(this);
+        if (!isInPeak) {
+            scheduler.scheduleThinkTime(this);
+        } else {
+            if (nbRequestsInSession<optionsManager.maxNbRequestsInSessionInPeaks) {
+                scheduler.scheduleThinkTime(this);
+                nbRequestsInSession++;
+            } else {
+              int pos = conversations.indexOf(this);
+              conversations.set(pos, null);
+              monitor.decConversationStartedCount();
+            }
+        }
         break;
     }
   }

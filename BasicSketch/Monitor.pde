@@ -71,7 +71,7 @@ class Monitor {
           text(values, 0, 20);
           
           if (optionsManager.useTimeouts) {
-              translate(110,0);
+              translate(120,0);
               float errorRate = (totalRequestsCount>0?timeoutCount*100/totalRequestsCount:0);
               fill(255*errorRate/100,0,0);
               textFont(f,14);
@@ -162,6 +162,7 @@ class Monitor {
     void incPoolBusyCount() {poolBusy++;}
     void decPoolBusyCount() {poolBusy--;}
     void incConversationStartedCount() {conversationStartedCount++;}
+    void decConversationStartedCount() {conversationStartedCount--;}
     
     void incTotalRequestsCount() {
     }

@@ -29,6 +29,11 @@ class OptionsManager {
   
   boolean useTimeouts = true; 
   int timeoutThresholdMs = 10000;
+
+  boolean usePeaks = false; 
+  int intervalMsBetweenPeaks = 0;
+  int maxConversationsInPeaks = 0;
+  int maxNbRequestsInSessionInPeaks = 0;
   
   OptionsManager() {
        configureResourceUsage();
@@ -57,6 +62,11 @@ class OptionsManager {
       responseTimeSD = responseTimeMean*3;
       thinkTimeSD = thinkTimeMean*3;
       arrivalIntervalMsSD = arrivalIntervalMsMean*3;
+      usePeaks = true;
+      intervalMsBetweenPeaks = 30000;
+      maxConversations = 50;
+      maxConversationsInPeaks = 150;
+      maxNbRequestsInSessionInPeaks = 1;
   }
   
   void configureLimitedPoolAndBacklog() {
@@ -70,11 +80,10 @@ class OptionsManager {
     maxConversations = 10;
     clientSideMaxRows = 10;
     //serverPoolMaxRows = 5;
-    responseTimeMean = 2000;
-    thinkTimeMean = 2000;
-    useMaxPoolSize = true;
-    maxPoolSize = 2;
-    timeoutThresholdMs = 1000;
+    responseTimeMean = 1000;
+    thinkTimeMean = 1000;
+    useMaxPoolSize = false;
+    maxPoolSize = 10;
   }
 }
 

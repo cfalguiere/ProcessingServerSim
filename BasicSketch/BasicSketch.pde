@@ -39,9 +39,11 @@ void draw() {
 
   for (int i=0; i<conversations.size(); i++) {
       Conversation conversation = conversations.get(i);
-      conversation.animation.displayReceiving(); // TODO switch in display
-      conversation.display();
-      conversation.animation.displaySending();
+      if (conversation!=null) {
+          conversation.animation.displayReceiving(); // TODO switch in display
+          conversation.display();
+          conversation.animation.displaySending();
+      }
   }
   server.checkBacklog();
   
