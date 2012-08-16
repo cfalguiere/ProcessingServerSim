@@ -1,18 +1,20 @@
 class OptionsManager { 
-  int maxConversations = 100;
+  int maxConversations = 200;
   int startDelayMs = 1000;
-  // nb new conversations per seconds
-  int rampupS = 5;
+
+  int arrivalIntervalMsMean = 100;
+  float arrivalIntervalMsSD = 0;
 
   int clientSideMaxRows = 12;
   //int serverPoolMaxRows = 10;
   
-  int responseTimeMean = 2000;
-  float responseTimeSD = 500;
-  int thinkTimeMean = 5000;
+  int responseTimeMean = 1500;
+  float responseTimeSD = 0;
+  int thinkTimeMean = 4000;
   float thinkTimeSD = 0;
 
   boolean showResourceUsage = false;
+  int startupMemory;
   int memoryPerRequest;
   int poolSaturation;
   
@@ -20,7 +22,7 @@ class OptionsManager {
   int cpuImpactCoef;
   int cpuQueueImpactCoef;
   int memoryGCThreshold;
-  int gcDuration;
+  int gcDurationMs;
   
   boolean useMaxPoolSize = false;
   int maxPoolSize;
@@ -28,27 +30,30 @@ class OptionsManager {
   OptionsManager() {
        configureResourceUsage();
        configureResourceUsageImpact();
-       configureVariableThinktime();
-       configureLimitedPoolAndBacklog();
+       configureVariability();
+       //configureLimitedPoolAndBacklog();
       // configureDebug();
   }
   
   void configureResourceUsage() {
       showResourceUsage = true;
-      memoryPerRequest = 15000;
+      startupMemory = 500000000; // 500Mo
+      memoryPerRequest = 5000000; // 5Mo
       poolSaturation = 25; // pool = 25 -> 100% CPU
   }
   
   void configureResourceUsageImpact() {
     showResourceUsageImpact = true;
-    cpuImpactCoef = 10;
-    cpuQueueImpactCoef = 100;
-    memoryGCThreshold = 1000000;
-    gcDuration = 20;
+    cpuImpactCoef = 5;
+    cpuQueueImpactCoef = 300;
+    memoryGCThreshold = 2000000000; //1Go
+    gcDurationMs = 100;
   }
   
-  void configureVariableThinktime() {
-      thinkTimeSD = 4500;
+  void configureVariability() {
+      responseTimeSD = responseTimeMean*3;
+      thinkTimeSD = thinkTimeMean*3;
+      arrivalIntervalMsSD = arrivalIntervalMsMean*3;
   }
   
   void configureLimitedPoolAndBacklog() {

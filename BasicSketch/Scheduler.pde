@@ -5,16 +5,18 @@ class Scheduler {
     int eventCounter = 0;
     GaussianGenerator responseTimeRNG;
     GaussianGenerator thinkTimeRNG;
+    GaussianGenerator arrivalRNG;
     long gcUntilMs = 0;
     boolean inGc = false;
   
     Scheduler() {
       responseTimeRNG = new GaussianGenerator(optionsManager.responseTimeMean, optionsManager.responseTimeSD, new Random());
       thinkTimeRNG = new GaussianGenerator(optionsManager.thinkTimeMean, optionsManager.thinkTimeSD, new Random());
+      arrivalRNG = new GaussianGenerator(optionsManager.arrivalIntervalMsMean, optionsManager.arrivalIntervalMsSD, new Random());
     }
   
     int getResponseTimeRandom() {
-        int rt = constrain(responseTimeRNG.nextValue().intValue(),0,200000);
+        int rt = constrain(responseTimeRNG.nextValue().intValue(),optionsManager.responseTimeMean/2,optionsManager.responseTimeMean*5);
         if (optionsManager.showResourceUsageImpact) {
           rt += monitor.cpuUsage*optionsManager.cpuImpactCoef + monitor.cpuQueue*optionsManager.cpuQueueImpactCoef;
         }
@@ -22,7 +24,7 @@ class Scheduler {
     }
     
     int getThinkTimeRandom() {
-      return constrain(thinkTimeRNG.nextValue().intValue(),0,10000);
+      return constrain(thinkTimeRNG.nextValue().intValue(),optionsManager.thinkTimeMean/2,optionsManager.thinkTimeMean*5);
     }
     
     void scheduleSendRequest(Conversation conversation) {
@@ -90,8 +92,10 @@ class Scheduler {
           conversations.add(new Conversation());
         }
         schedulerEvents = new TreeSet();
+        int cumulatedInterval = 0; // TOSDO overflow ?
         for (int i=0; i<conversations.size(); i++) {
-          int startOffset = optionsManager.startDelayMs + (i*1000/optionsManager.rampupS);
+          cumulatedInterval += constrain(arrivalRNG.nextValue().intValue(),optionsManager.arrivalIntervalMsMean/12,optionsManager.arrivalIntervalMsMean*5);
+          int startOffset = optionsManager.startDelayMs + cumulatedInterval;
           schedulerEvents.add(new Event(startOffset, conversations.get(i)));
         }
     }
