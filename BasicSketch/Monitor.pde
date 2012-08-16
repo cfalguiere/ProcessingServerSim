@@ -17,6 +17,7 @@ class Monitor {
     int avgResponseTime = 0;
     int maxResponseTime = 0;
     int maxMemorySize = optionsManager.startupMemory;
+    int timeoutCount = 0;
     
     Monitor() {
       DecimalFormatSymbols symbols = new DecimalFormatSymbols();
@@ -57,13 +58,11 @@ class Monitor {
           // text
           fill(0);
           textFont(f,14);
-          text("users   requests              resp. time", 0, 0);
+          text("users   requests              errors", 0, 0);
           textFont(f,22);
-          String values = String.format("%03d  %03d - %02d/s",  conversationStartedCount,  
-              pendingRequestsCount, totalRequestsCount*1000/millis());
-          if (maxResponseTime > 0) {
-            values = String.format("%s  %04dms",  values, avgResponseTime);  
-          }
+          float errorRate = (totalRequestsCount>0?timeoutCount*100/totalRequestsCount:0);
+          String values = String.format("%03d  %3d - %02d/s  %2.0f%% - %2d/s",  conversationStartedCount,  
+              pendingRequestsCount, totalRequestsCount*1000/millis(), errorRate, timeoutCount*1000/millis());
           text(values, 0, 20);
           popMatrix();
           displayRespTimeSparkLine();
@@ -120,12 +119,12 @@ class Monitor {
         
     void displayMemorySparkLine() { 
         Plotter plotter = new Plotter();
-        plotter.drawSparkline("Memory", memorySize, maxMemorySize, layoutManager.memoryBoxPosition, layoutManager.memoryBoxSize, State.UnitType.BYTES);
+        plotter.drawSparkline("memory", memorySize, maxMemorySize, layoutManager.memoryBoxPosition, layoutManager.memoryBoxSize, State.UnitType.BYTES);
     }
     
     void displayRespTimeSparkLine() { 
         Plotter plotter = new Plotter();
-        plotter.drawSparkline("Resp. Time", responseTimes, maxResponseTime, layoutManager.respTimeBoxPosition, layoutManager.respTimeBoxSize, State.UnitType.DURATION);
+        plotter.drawSparkline("resp. time", responseTimes, maxResponseTime, layoutManager.respTimeBoxPosition, layoutManager.respTimeBoxSize, State.UnitType.DURATION);
     }
     
 
@@ -156,6 +155,10 @@ class Monitor {
         avgResponseTime = (int)(cumResponseTime/totalRequestsCount); 
         responseTimes.add(new Long(avgResponseTime));
         maxResponseTime = max(avgResponseTime, maxResponseTime);
+        
+        if (duration>optionsManager.timeoutThresholdMs) {
+            timeoutCount++;
+        }
     }
 
     void mimicGarbage() {

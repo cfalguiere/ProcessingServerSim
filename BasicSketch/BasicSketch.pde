@@ -1,8 +1,8 @@
 
 import java.util.TreeSet;
 
-LayoutManager layoutManager = new LayoutManager();
 OptionsManager optionsManager = new OptionsManager();
+LayoutManager layoutManager = new LayoutManager();
 Scheduler scheduler = new Scheduler();
 List<Conversation> conversations;
 static int conversationCounter = 0;

@@ -19,7 +19,7 @@ class LayoutManager {
   int serverBacklogHeight =  round(clientSideRad*2) + clientSideVertSpacer*3;
   
   int serverPoolLeftMargin = serverBoxLeftMargin + 3;
-  int serverPoolTopMargin = serverBacklogTopMargin + serverBacklogHeight + 50;
+  int serverPoolTopMargin = (optionsManager.useMaxPoolSize?serverBacklogTopMargin + serverBacklogHeight:30) + 50;
   int serverPoolWidth = serverBoxWidth - 6;
 
   int transferAnimationDuration = 300;

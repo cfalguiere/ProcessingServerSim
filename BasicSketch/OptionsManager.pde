@@ -27,12 +27,15 @@ class OptionsManager {
   boolean useMaxPoolSize = false;
   int maxPoolSize;
   
+  boolean useTimeouts = false;
+  int timeoutThresholdMs = 10000;
+  
   OptionsManager() {
        configureResourceUsage();
        configureResourceUsageImpact();
        configureVariability();
        //configureLimitedPoolAndBacklog();
-      // configureDebug();
+       //configureDebug();
   }
   
   void configureResourceUsage() {
@@ -64,13 +67,14 @@ class OptionsManager {
   
   
   void configureDebug() {
-    maxConversations = 50;
+    maxConversations = 10;
     clientSideMaxRows = 10;
     //serverPoolMaxRows = 5;
     responseTimeMean = 2000;
     thinkTimeMean = 2000;
     useMaxPoolSize = true;
     maxPoolSize = 2;
+    timeoutThresholdMs = 1000;
   }
 }
 
