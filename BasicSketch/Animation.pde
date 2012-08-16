@@ -25,7 +25,8 @@ class Animation {
                 logger.debug("Animation", "SND xTranslate " + xTranslate  + " wTranslate " + wTranslate );
                 logger.debug("Animation", "SND frameRate " + frameRate  
                       + " layoutManager.transferAnimationDuration " + layoutManager.transferAnimationDuration 
-                      + " nbFrames " + nbFrames );                break;
+                      + " nbFrames " + nbFrames );                
+                 break;
             case RECEIVING:
                 logger.debug("Animation", "REC Creating receiving animation for conversation " + conversation.id);
                 xTranslate = layoutManager.serverPoolLeftMargin - layoutManager.clientSideRadMoving;

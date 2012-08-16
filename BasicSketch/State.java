@@ -8,11 +8,15 @@ class State {
   }
   
   public enum UnitType {
-     TIME, BYTES  
+     DURATION, BYTES  
   }
   
   public enum BytesUnit {
      o, Ko, Mo, Go  
+  }
+  
+  public enum DurationUnit {
+     ms, s
   }
   
 }

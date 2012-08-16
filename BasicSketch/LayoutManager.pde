@@ -3,7 +3,7 @@ import org.uncommons.maths.random.GaussianGenerator;
 class LayoutManager { 
   float clientSideRad = 20;
   float clientSideRadMoving = 15;
-  int clientSideTopMargin = 100;
+  int clientSideTopMargin = 110;
   int clientSideLeftMargin = 10;
   int clientSideVertSpacer = 2;
   
@@ -32,6 +32,9 @@ class LayoutManager {
 
   float resourcesBoxLeftMargin = serverBoxLeftMargin + serverBoxWidth + 10;
   float resourcesBoxTopMargin = serverBoxTopMargin;
+
+  PVector respTimeBoxPosition = new PVector(10, 50);
+  PVector respTimeBoxSize = new PVector(250, 40);
   float gaugeDiameter = 80;
 
   PVector memoryBoxPosition = new PVector(resourcesBoxLeftMargin, resourcesBoxTopMargin + 270);
@@ -39,7 +42,7 @@ class LayoutManager {
   
   
   GaussianGenerator rng = new GaussianGenerator(3, 2, new Random());
-  
+  /*
     void displayRespTimeChartBox() {
           pushMatrix();
           translate(respTimeBoxLeftMargin, respTimeBoxTopMargin);
@@ -51,7 +54,7 @@ class LayoutManager {
           line(0, respTimeChartHeight, respTimeChartWidth, respTimeChartHeight);
           line(0, 0, 0, respTimeChartHeight);
           popMatrix();
-     }
+     }*/
   
     void displayServerBox() {
           pushMatrix();

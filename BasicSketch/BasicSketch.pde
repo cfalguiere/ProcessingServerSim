@@ -32,7 +32,6 @@ void draw() {
   }
  
   layoutManager.displayServerBox();
-  layoutManager.displayRespTimeChartBox();
   
   frameCount++;
   

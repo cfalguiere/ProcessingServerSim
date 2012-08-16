@@ -12,7 +12,7 @@ class Monitor {
     int gcPauses;
     DecimalFormat formatter;
     DecimalFormat sparklineFormatter;
-    List<Integer> responseTimes = new ArrayList<Integer>();
+    List<Long> responseTimes = new ArrayList<Long>();
     List<Long> memorySize = new ArrayList<Long>();
     int avgResponseTime = 0;
     int maxResponseTime = 0;
@@ -130,6 +130,12 @@ class Monitor {
         plotter.drawSparkline("Memory", memorySize, maxMemorySize, layoutManager.memoryBoxPosition, layoutManager.memoryBoxSize, State.UnitType.BYTES);
     }
     
+    void displayRespTimeSparkLine() { 
+        Plotter plotter = new Plotter();
+        plotter.drawSparkline("Resp. Time", responseTimes, maxResponseTime, layoutManager.respTimeBoxPosition, layoutManager.respTimeBoxSize, State.UnitType.DURATION);
+    }
+    
+    /*
     void displayRespTimeSparkLine() { // TODO sparkline util
           pushMatrix();
           translate(layoutManager.respTimeBoxLeftMargin, layoutManager.respTimeBoxTopMargin);
@@ -155,7 +161,7 @@ class Monitor {
               text(label, x+3, memY+5);
           }
           popMatrix();
-     }
+     }*/
     
     void incGcPause(int duration) {gcPauses+=duration;}
     void incPoolBusyCount() {poolBusy++;}
@@ -181,7 +187,7 @@ class Monitor {
         totalRequestsCount++;
         
         avgResponseTime = (int)(cumResponseTime/totalRequestsCount); 
-        responseTimes.add(new Integer(avgResponseTime));
+        responseTimes.add(new Long(avgResponseTime));
         maxResponseTime = max(avgResponseTime, maxResponseTime);
     }
 

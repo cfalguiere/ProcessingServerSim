@@ -32,20 +32,28 @@ class Plotter {
     }
 
     
-    State.BytesUnit getUnit(long value) {
-            if (value < 1000000L) { // 1 or 2
-                if (value < 1000L) {
-                    return State.BytesUnit.o;
-                } else {
-                    return State.BytesUnit.Ko;
-                }
-            } else { // 3 or 4
-                if (value < 1000000000L) {
-                    return State.BytesUnit.Mo;
-                } else {
-                    return State.BytesUnit.Go;
-                }
-            }           
+    State.BytesUnit getBytesUnit(long value) {
+        if (value < 1000000L) { // 1 or 2
+            if (value < 1000L) {
+                return State.BytesUnit.o;
+            } else {
+                return State.BytesUnit.Ko;
+            }
+        } else { // 3 or 4
+            if (value < 1000000000L) {
+                return State.BytesUnit.Mo;
+            } else {
+                return State.BytesUnit.Go;
+            }
+        }           
+    }
+    
+    State.DurationUnit getDurationUnit(long value) {
+        if (value < 1000L) {
+            return State.DurationUnit.ms;
+        } else {
+            return State.DurationUnit.s;
+        }
     }
     
     void drawValues(List<Long> pData, long pMaxValue, PVector pBoxSize, State.UnitType pUnitType) { //TODO unit type
@@ -58,9 +66,23 @@ class Plotter {
           float x = 0;
           float memY = pBoxSize.y; 
           float value = 0;
-          State.BytesUnit unit = getUnit(pMaxValue);
-          logger.debug("Plotter", "pMaxValue " + pMaxValue +  " unit " + unit);
-          float scaleFactor =  pow(1000, unit.ordinal());
+          String unitName = "";
+          int unitOrdinal = 0;
+          switch (pUnitType) {
+              case DURATION:
+                State.DurationUnit unitd = getDurationUnit(pMaxValue);
+                logger.debug("Plotter", "pMaxValue " + pMaxValue +  " unit " + unitd);
+                unitName = unitd.name();
+                unitOrdinal = unitd.ordinal();
+              break;
+              case BYTES:
+                State.BytesUnit unitb = getBytesUnit(pMaxValue);
+                logger.debug("Plotter", "pMaxValue " + pMaxValue +  " unit " + unitb);
+                unitName = unitb.name();
+                unitOrdinal = unitb.ordinal();
+              break;
+          }
+          float scaleFactor =  pow(1000, unitOrdinal);
           float pMaxValueScaled = pMaxValue / scaleFactor;
           for (int i=0; i<pData.size(); i++) {
               value = pData.get(i).longValue() / scaleFactor;
@@ -74,7 +96,7 @@ class Plotter {
           if (x>0) {
               textFont(f,15);
               fill(0);
-              String label = String.format("%s %s", valueFormatter.format(value),unit);  
+              String label = String.format("%s %s", valueFormatter.format(value),unitName);  
               text(label, x+3, memY+5);
           }
           popMatrix();
